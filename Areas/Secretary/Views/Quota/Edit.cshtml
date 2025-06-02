@@ -1,0 +1,94 @@
+@model GraduationAdmissionSystem.Models.ProgramQuota
+
+@{ 
+    ViewData["Title"] = "Edit Program Quota";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit" id="editQuotaForm">
+            <input type="hidden" asp-for="ProgramQuotaId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="ApplicationPeriodId" class="control-label"></label>
+                <select asp-for="ApplicationPeriodId" class="form-control" asp-items="ViewBag.ApplicationPeriods">
+                    <option value="">-- Select Application Period --</option>
+                </select>
+                <span asp-validation-for="ApplicationPeriodId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProgramId" class="control-label"></label>
+                <select asp-for="ProgramId" class="form-control" asp-items="ViewBag.Programs">
+                    <option value="">-- Select Program --</option>
+                </select>
+                <span asp-validation-for="ProgramId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TotalQuota" class="control-label"></label>
+                <input asp-for="TotalQuota" class="form-control" type="number" min="0"/>
+                <span asp-validation-for="TotalQuota" class="text-danger"></span>
+            </div>
+
+            <h4>Scholarship Quotas</h4>
+            <div id="scholarshipQuotaContainer">
+                @for (int i = 0; i < Model.ScholarshipQuotas.Count; i++)
+                {
+                     <partial name="_ScholarshipQuotaEditor" model="Model.ScholarshipQuotas.ToList()[i]" view-data='new ViewDataDictionary(ViewData) { { "Prefix", $"ScholarshipQuotas[{i}]" } }'/>
+                }
+            </div>
+            <button type="button" id="addScholarshipQuota" class="btn btn-info btn-sm mt-2">Add Scholarship Quota</button>
+            
+            <hr />
+            <div class="form-group mt-3">
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            let scholarshipIndex = $('#scholarshipQuotaContainer .scholarship-entry').length;
+
+            $("#addScholarshipQuota").click(function () {
+                var container = $("#scholarshipQuotaContainer");
+                var newEntryHtml = `
+                <div class="scholarship-entry form-row mb-2">
+                    <input type="hidden" name="ScholarshipQuotas[${scholarshipIndex}].ScholarshipQuotaId" value="0" />
+                    <input type="hidden" name="ScholarshipQuotas[${scholarshipIndex}].ProgramQuotaId" value="@Model.ProgramQuotaId" />
+                    <div class="col-md-5">
+                        <label name="ScholarshipQuotas[${scholarshipIndex}].ScholarshipPercentage" class="control-label">Scholarship Percentage (%)</label>
+                        <input name="ScholarshipQuotas[${scholarshipIndex}].ScholarshipPercentage" class="form-control" type="number" min="0" max="100" placeholder="e.g., 0, 25, 50" />
+                        <span data-valmsg-for="ScholarshipQuotas[${scholarshipIndex}].ScholarshipPercentage" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-5">
+                        <label name="ScholarshipQuotas[${scholarshipIndex}].AllocatedQuota" class="control-label">Allocated Quota</label>
+                        <input name="ScholarshipQuotas[${scholarshipIndex}].AllocatedQuota" class="form-control" type="number" min="0" placeholder="Number of students" />
+                        <span data-valmsg-for="ScholarshipQuotas[${scholarshipIndex}].AllocatedQuota" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-2 align-self-end">
+                        <button type="button" class="btn btn-danger btn-sm remove-scholarship-entry">Remove</button>
+                    </div>
+                </div>`;
+                container.append(newEntryHtml);
+                scholarshipIndex++;
+                var form = $("#editQuotaForm");
+                form.removeData("validator");
+                form.removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse(form);
+            });
+
+            $(document).on('click', '.remove-scholarship-entry', function () {
+                $(this).closest('.scholarship-entry').remove();
+            });
+        });
+    </script>
+} 

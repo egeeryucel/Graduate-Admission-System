@@ -1,0 +1,309 @@
+@model GraduationAdmissionSystem.ViewModels.DepartmentChairApplicationDetailsViewModel
+
+@{
+    ViewData["Title"] = "Application Details";
+    var personalInfo = ViewBag.PersonalInfo as GraduationAdmissionSystem.Models.PersonalInformation;
+    var educationalInfo = ViewBag.EducationalInfo as GraduationAdmissionSystem.Models.EducationalInformation;
+    var documents = ViewBag.Documents as List<GraduationAdmissionSystem.Models.Document>;
+    var applicantName = Model.ApplicantFullName;
+}
+
+<h1>Application Review: @applicantName</h1>
+<hr />
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-4">Applicant:</dt>
+            <dd class="col-sm-8">@applicantName (@Model.ApplicantEmail)</dd>
+
+            <dt class="col-sm-4">Application Date:</dt>
+            <dd class="col-sm-8">@Model.ApplicationCreatedAt</dd>
+
+            <dt class="col-sm-4">Current Status:</dt>
+            <dd class="col-sm-8"><span class="badge @GetStatusBadgeClass(Model.ApplicationStatus)">@Model.ApplicationStatus</span></dd>
+
+            <dt class="col-sm-4">Forwarded On:</dt>
+            <dd class="col-sm-8">@Model.ApplicationForwardedAt</dd>
+            
+            <dt class="col-sm-4">Application Period:</dt>
+            <dd class="col-sm-8">@Model.ApplicationPeriodName</dd>
+        </dl>
+    </div>
+    @if (!string.IsNullOrWhiteSpace(Model.DepartmentChairNotes))
+    {
+        <div class="col-md-6">
+            <div class="card bg-light mb-3">
+                <div class="card-header">Department Chair / Interview Notes</div>
+                <div class="card-body">
+                    <p class="card-text">@Html.Raw(Model.DepartmentChairNotes?.Replace("\n", "<br />"))</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<ul class="nav nav-tabs" id="applicationTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="personal-tab" data-bs-toggle="tab" data-bs-target="#personal" type="button" role="tab" aria-controls="personal" aria-selected="true">Personal Information</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="education-tab" data-bs-toggle="tab" data-bs-target="#education" type="button" role="tab" aria-controls="education" aria-selected="false">Educational Information</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="programs-tab" data-bs-toggle="tab" data-bs-target="#programs" type="button" role="tab" aria-controls="programs" aria-selected="false">Program Choices</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents" type="button" role="tab" aria-controls="documents" aria-selected="false">Documents</button>
+    </li>
+</ul>
+
+<div class="tab-content" id="applicationTabContent">
+    <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
+        <div class="card card-body mt-3">
+            @if (personalInfo != null)
+            {
+                <dl class="row">
+                    <dt class="col-sm-3">First Name</dt>
+                    <dd class="col-sm-9">@personalInfo.FirstName</dd>
+                    <dt class="col-sm-3">Last Name</dt>
+                    <dd class="col-sm-9">@personalInfo.LastName</dd>
+                    <dt class="col-sm-3">Passport No</dt>
+                    <dd class="col-sm-9">@personalInfo.PassportNumber</dd>
+                    <dt class="col-sm-3">Date of Birth</dt>
+                    <dd class="col-sm-9">@personalInfo.DateOfBirth.ToString("yyyy-MM-dd")</dd>
+                    <dt class="col-sm-3">Gender</dt>
+                    <dd class="col-sm-9">@personalInfo.Gender</dd>
+                    <dt class="col-sm-3">Citizenship</dt>
+                    <dd class="col-sm-9">@personalInfo.Citizenship</dd>
+                    <dt class="col-sm-3">Country of Birth</dt>
+                    <dd class="col-sm-9">@personalInfo.CountryOfBirth</dd>
+                     <dt class="col-sm-3">City of Birth</dt>
+                    <dd class="col-sm-9">@personalInfo.CityOfBirth</dd>
+                     <dt class="col-sm-3">Phone Number</dt>
+                    <dd class="col-sm-9">@personalInfo.Phone</dd>
+                    <dt class="col-sm-3">Address</dt>
+                    <dd class="col-sm-9">@personalInfo.Address</dd>
+                     <dt class="col-sm-3">Country of Residence</dt>
+                    <dd class="col-sm-9">@personalInfo.CountryOfResidence</dd>
+                     <dt class="col-sm-3">Father's Name</dt>
+                    <dd class="col-sm-9">@personalInfo.FatherName</dd>
+                     <dt class="col-sm-3">Mother's Name</dt>
+                    <dd class="col-sm-9">@personalInfo.MotherName</dd>
+                </dl>
+            }
+            else
+            {
+                <p class="text-muted">No personal information available.</p>
+            }
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
+        <div class="card card-body mt-3">
+             @if (educationalInfo != null)
+            {
+                <h4>Secondary School Information</h4>
+                <dl class="row">
+                    <dt class="col-sm-3">School Name</dt>
+                    <dd class="col-sm-9">@educationalInfo.SchoolName</dd>
+
+                    <dt class="col-sm-3">Graduation Year</dt>
+                    <dd class="col-sm-9">@educationalInfo.GraduationYear</dd>
+
+                    <dt class="col-sm-3">GPA</dt>
+                    <dd class="col-sm-9">@educationalInfo.GPA</dd>
+
+                    <dt class="col-sm-3">Country</dt>
+                    <dd class="col-sm-9">@educationalInfo.Country</dd>
+
+                    <dt class="col-sm-3">City</dt>
+                    <dd class="col-sm-9">@educationalInfo.City</dd>
+                </dl>
+                <hr />
+                <h4>Language Proficiency</h4>
+                 <dl class="row">
+                     <dt class="col-sm-3">Language Proficiency</dt>
+                    <dd class="col-sm-9">@educationalInfo.LanguageProficiency</dd>
+
+                    <dt class="col-sm-3">Language Exam Score</dt>
+                    <dd class="col-sm-9">@educationalInfo.LanguageExamScore</dd>
+                 </dl>
+                 <hr />
+                 <h4>Other Information</h4>
+                 <dl class="row">
+                    <dt class="col-sm-3">Blue Card Owner?</dt>
+                    <dd class="col-sm-9">@(educationalInfo.IsBlueCardOwner ? "Yes" : "No")</dd>
+                    <dt class="col-sm-3">Dual Citizenship?</dt>
+                    <dd class="col-sm-9">@(personalInfo.HasDualCitizenship ? "Yes" : "No")</dd>
+                 </dl>
+            }
+            else
+            {
+                 <p class="text-muted">No educational information available.</p>
+            }
+        </div>
+    </div>
+    <div class="tab-pane fade" id="programs" role="tabpanel" aria-labelledby="programs-tab">
+        <div class="card card-body mt-3">
+            <h4>Program Choices</h4>
+            @if (Model.ProgramChoices != null && Model.ProgramChoices.Any())
+            {
+                 <ul class="list-group">
+                    @foreach (var choice in Model.ProgramChoices.OrderBy(pc => pc.Choice))
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            @choice.ProgramName
+                            <span class="badge bg-primary rounded-pill">Choice @choice.Choice</span>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted">No program choices selected.</p>
+            }
+        </div>
+    </div>
+    <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+         <div class="card card-body mt-3">
+            <h4>Uploaded Documents</h4>
+            @if (documents != null && documents.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var doc in documents)
+                    {
+                        <li class="list-group-item">
+                            @doc.FileName (@doc.DocumentType) - @doc.FileSize bytes
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted">No documents uploaded.</p>
+            }
+        </div>
+    </div>
+</div>
+<div class="mt-4">
+    <h4>Department Review Actions</h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+    @if (TempData["Warning"] != null)
+    {
+        <div class="alert alert-warning">@TempData["Warning"]</div>
+    }
+
+    <div class="row">
+        @if (Model.ApplicationStatus == "Under Department Review")
+        {
+            <div class="col-md-4">
+                <h5>Recommend for Interview</h5>
+                <form asp-action="RecommendForInterview" method="post" class="mb-3">
+                    <input type="hidden" name="id" value="@Model.ApplicationId" />
+                    <div class="mb-3">
+                        <label for="interviewNotes" class="form-label">Notes (Optional - for Interview Committee):</label>
+                        <textarea id="interviewNotes" name="interviewNotes" class="form-control" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-info">Recommend for Interview</button>
+                </form>
+            </div>
+        }
+        @{ var actionColumnClass = Model.ApplicationStatus == "Under Department Review" ? "col-md-4" : "col-md-6"; }
+
+        <div class="@actionColumnClass">
+            <h5>Reject Application</h5>
+            <form asp-action="RejectApplication" method="post" class="mb-3">
+                <input type="hidden" name="id" value="@Model.ApplicationId" />
+                <div class="mb-3">
+                    <label for="rejectionReason" class="form-label">Reason for Rejection:</label>
+                    <textarea id="rejectionReason" name="rejectionReason" class="form-control" rows="3" required></textarea>
+                    <div class="invalid-feedback">Please provide a reason for rejection.</div>
+                </div>
+                <button type="submit" class="btn btn-danger">Reject Application</button>
+            </form>
+        </div>
+
+        <div class="@actionColumnClass">
+            <h5>Accept Application</h5>
+            <form asp-action="AcceptApplication" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="ApplicationId" />
+
+                <div class="mb-3">
+                    <label asp-for="SelectedScholarshipQuotaId" class="form-label"></label>
+                    <select asp-for="SelectedScholarshipQuotaId" asp-items="Model.AvailableScholarshipQuotas" class="form-select">
+                    </select>
+                    <span asp-validation-for="SelectedScholarshipQuotaId" class="text-danger"></span>
+                </div>
+                
+                <div class="mb-3">
+                    <label asp-for="FinalDecisionNotes" class="form-label"></label>
+                    <textarea asp-for="FinalDecisionNotes" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="RequiresScientificPreparation" class="form-label"></label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="RequiresScientificPreparation" value="true">
+                        <label class="form-check-label" for="RequiresScientificPreparation_True">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="RequiresScientificPreparation" value="false">
+                        <label class="form-check-label" for="RequiresScientificPreparation_False">
+                            No
+                        </label>
+                    </div>
+                     <span asp-validation-for="RequiresScientificPreparation" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success">Accept Application</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <a asp-action="Applications" class="btn btn-secondary">Back to Applications List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $('form[asp-action="RejectApplication"]').submit(function (e) {
+                var rejectionReason = $(this).find('textarea[name="rejectionReason"]').val();
+                if (!rejectionReason || rejectionReason.trim() === '') {
+                    return; 
+                }
+                if (!confirm('Are you sure you want to reject this application? This action cannot be undone.')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}
+
+@functions {
+    string GetStatusBadgeClass(string status)
+    {
+        return status switch
+        {
+            "Accepted" => "bg-success",
+            "Rejected" => "bg-danger",
+            "Interview Passed" => "bg-primary",
+            "Interview Failed" => "bg-warning text-dark",
+            "Pending Interview" => "bg-info text-dark",
+            "Under Department Review" => "bg-secondary",
+            _ => "bg-light text-dark"
+        };
+    }
+} 

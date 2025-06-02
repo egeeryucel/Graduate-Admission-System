@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "Secretary Dashboard";
+}
+
+<div class="container">
+    <h2>Graduate School Secretary Dashboard</h2>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Pending Applications</h5>
+                    <p class="card-text">Review new applications and verify documents.</p>
+                    <a href="@Url.Action("Pending", "Applications", new { area = "Secretary" })" class="btn btn-primary">Review Applications</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Quota Management</h5>
+                    <p class="card-text">Monitor and manage program quotas.</p>
+                    <a asp-area="Secretary" asp-controller="Quota" asp-action="Index" class="btn btn-primary">Manage Quotas</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sent to Department</h5>
+                    <p class="card-text">View applications already forwarded to department chairs.</p>
+                    <a asp-area="Secretary" asp-controller="Applications" asp-action="SentToDepartment" class="btn btn-primary">View Sent Applications</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Application Periods</h5>
+                    <p class="card-text">Define and control application intake periods.</p>
+                    <a asp-area="Secretary" asp-controller="ApplicationPeriods" asp-action="Index" class="btn btn-primary">Manage Periods</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

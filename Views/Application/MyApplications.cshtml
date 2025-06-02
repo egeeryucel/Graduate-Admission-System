@@ -1,0 +1,189 @@
+@model IEnumerable<GraduationAdmissionSystem.Models.ProgramSelection>
+@{
+    ViewData["Title"] = "My Applications";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">My Applications</h2>
+                </div>
+                <div class="card-body">
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["Error"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["Success"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    @if (!Model.Any())
+                    {
+                        <div class="alert alert-info">
+                            <p>You haven't submitted any applications yet.</p>
+                            <a href="@Url.Action("ProgramSelection", "Application")" class="btn btn-primary mt-2">
+                                <i class="fas fa-plus-circle me-2"></i> Start New Application
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Tracking Number</th>
+                                        <th>Programs</th>
+                                        <th>Status</th>
+                                        <th>Created At</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var application in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <span class="badge bg-primary">@application.TrackingNumber</span>
+                                            </td>
+                                            <td>
+                                                @foreach (var program in application.ProgramChoices.OrderBy(pc => pc.Choice))
+                                                {
+                                                    <div class="mb-1">
+                                                        <small class="badge bg-secondary">Choice @program.Choice</small>
+                                                        @program.ProgramName
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td>
+                                                @{
+                                                    var statusClass = application.ApplicationStatus switch
+                                                    {
+                                                        "Draft" => "bg-warning text-dark",
+                                                        "Submitted" => "bg-success",
+                                                        "Needs Review" => "bg-danger",
+                                                        "Under Department Review" => "bg-info",
+                                                        "Accepted" => "bg-success",
+                                                        "Rejected" => "bg-danger",
+                                                        _ => "bg-secondary"
+                                                    };
+                                                }
+                                                <span class="badge @statusClass">@application.ApplicationStatus</span>
+                                                @if (application.ApplicationStatus == "Accepted" && application.RequiresScientificPreparation.HasValue)
+                                                {
+                                                    <br/>
+                                                    <small class="text-muted">
+                                                        Scientific Preparation: 
+                                                        @if (application.RequiresScientificPreparation == true)
+                                                        {
+                                                            <span class="badge bg-warning text-dark">Required</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge bg-info">Not Required</span>
+                                                        }
+                                                    </small>
+                                                }
+                                                @if (application.ApplicationStatus == "Needs Review" && !string.IsNullOrEmpty(application.ReviewComment))
+                                                {
+                                                    <button type="button" class="btn btn-sm btn-link p-0 ms-1" data-bs-toggle="modal" data-bs-target="#reviewCommentModal-@application.Id">
+                                                        <i class="fas fa-comment-alt text-danger"></i>
+                                                    </button>
+                                                    <div class="modal fade" id="reviewCommentModal-@application.Id" tabindex="-1" aria-labelledby="reviewCommentModalLabel-@application.Id" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-danger text-white">
+                                                                    <h5 class="modal-title" id="reviewCommentModalLabel-@application.Id">Review Comments</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="alert alert-warning">
+                                                                        <i class="fas fa-exclamation-triangle me-2"></i>
+                                                                        <strong>Your application requires corrections</strong>
+                                                                    </div>
+                                                                    <p><strong>Comments from Secretary:</strong></p>
+                                                                    <p>@application.ReviewComment</p>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </td>
+                                            <td>@application.CreatedAt.ToString("yyyy-MM-dd")</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="@Url.Action("CheckStatus", "Home", new { trackingNumber = application.TrackingNumber })" class="btn btn-sm btn-info">
+                                                        <i class="fas fa-search me-1"></i> Details
+                                                    </a>
+                                                    @if (application.ApplicationStatus == "Draft")
+                                                    {
+                                                        <a href="@Url.Action("PersonalInformation", "Application", new { id = application.Id })" class="btn btn-sm btn-warning">
+                                                            <i class="fas fa-edit me-1"></i> Continue
+                                                        </a>
+                                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@application.Id">
+                                                            <i class="fas fa-trash me-1"></i> Delete
+                                                        </button>
+                                                        <div class="modal fade" id="deleteModal-@application.Id" tabindex="-1" aria-labelledby="deleteModalLabel-@application.Id" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header bg-danger text-white">
+                                                                        <h5 class="modal-title" id="deleteModalLabel-@application.Id">Confirm Delete</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <p>Are you sure you want to delete this application?</p>
+                                                                        <p><strong>Tracking Number:</strong> @application.TrackingNumber</p>
+                                                                        <p class="text-danger"><strong>Warning:</strong> This action cannot be undone!</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                        <form method="post" action="@Url.Action("DeleteApplication", "Application")">
+                                                                            @Html.AntiForgeryToken()
+                                                                            <input type="hidden" name="id" value="@application.Id" />
+                                                                            <button type="submit" class="btn btn-danger">Delete Application</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    @if (application.ApplicationStatus == "Needs Review")
+                                                    {
+                                                        <a href="@Url.Action("PersonalInformation", "Application", new { id = application.Id })" class="btn btn-sm btn-danger">
+                                                            <i class="fas fa-edit me-1"></i> Edit Application
+                                                        </a>
+                                                    }
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-3">
+                            <a href="@Url.Action("ProgramSelection", "Application")" class="btn btn-success">
+                                <i class="fas fa-plus-circle me-2"></i> Start New Application
+                            </a>
+                            <a href="@Url.Action("Index", "Home", new { area = "Candidate" })" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-2"></i> Back to Dashboard
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,110 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container mt-4">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="mb-0">Graduate Admission System</h1>
+                </div>
+                <div class="card-body">
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <h4 class="mb-4">Welcome to the Graduate Studies Application Portal</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="fas fa-file-alt me-2"></i> New Application</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Start a new graduate program application here:</p>
+                                        <a href="@Url.Action("Index", "Home", new { area = "Candidate" })" class="btn btn-success">
+                                            <i class="fas fa-plus-circle me-2"></i> Go to Candidate Dashboard
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-info text-white">
+                                        <h5 class="mb-0"><i class="fas fa-search me-2"></i> Check Application Status</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Already applied? Check your application status:</p>
+                                        <a href="@Url.Action("CheckStatus", "Home")" class="btn btn-info text-white">
+                                            <i class="fas fa-clipboard-check me-2"></i> Check Status
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-5">
+                            <h5>Need Help?</h5>
+                            <p>If you have questions about the admission process, please contact the Graduate Studies Office.</p>
+                            <p><strong>Email:</strong> graduate@university.edu</p>
+                            <p><strong>Phone:</strong> +90 123 456 7890</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <h4 class="mb-4">Welcome to the Graduate Admission System</h4>
+                        
+                        <div class="alert alert-info">
+                            <p>To access the graduate application portal, please log in or register with your email address.</p>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">Already have an account?</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Log in to access your applications and check your status:</p>
+                                        <a href="@Url.Action("Login", "Account")" class="btn btn-primary">
+                                            <i class="fas fa-sign-in-alt me-2"></i> Login
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0">New to our system?</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Create an account to start your graduate application:</p>
+                                        <a href="@Url.Action("Register", "Account")" class="btn btn-success">
+                                            <i class="fas fa-user-plus me-2"></i> Register
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-5">
+                            <h5>About our Admission System</h5>
+                            <p>Our Graduate Admission System provides an easy way to apply to graduate programs and track your application status.</p>
+                            <p>Registration requires a valid email address that will be used for communication throughout the admission process.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

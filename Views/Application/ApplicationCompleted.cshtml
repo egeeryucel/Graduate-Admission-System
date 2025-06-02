@@ -1,0 +1,187 @@
+@model GraduationAdmissionSystem.Models.ProgramSelection
+
+@{
+    ViewData["Title"] = "Review and Submit";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="progress mb-4">
+                <div class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">90%</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4">@ViewData["Title"]</h2>
+
+            <div class="alert alert-info mb-4">
+                <i class="fas fa-info-circle"></i> Please review your application details before final submission. Once submitted, you won't be able to make changes.
+            </div>
+            
+            <div class="accordion" id="reviewAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#programInfo" aria-expanded="true">
+                            <i class="fas fa-university me-2"></i> Applied Programs
+                        </button>
+                    </h2>
+                    <div id="programInfo" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Applied Program Number</th>
+                                            <th>Program Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var program in Model.ProgramChoices.OrderBy(pc => pc.Choice))
+                                        {
+                                            <tr>
+                                                <td>AP@(Model.Id.ToString("D6"))@(program.Choice)</td>
+                                                <td>@program.ProgramName</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#uploadedDocs">
+                            <i class="fas fa-file-upload me-2"></i> Uploaded Documents
+                        </button>
+                    </h2>
+                    <div id="uploadedDocs" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Action</th>
+                                            <th>Title</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (ViewBag.Documents != null)
+                                        {
+                                            @foreach (var doc in ViewBag.Documents)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <a href="/Application/ViewDocument/@doc.Id" class="text-primary" target="_blank">View</a>
+                                                    </td>
+                                                    <td>@doc.DocumentType</td>
+                                                    <td><span class="badge bg-success">Uploaded</span></td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#personalInfo">
+                            <i class="fas fa-user me-2"></i> Personal Information
+                        </button>
+                    </h2>
+                    <div id="personalInfo" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>First Name:</strong> @ViewBag.PersonalInfo?.FirstName</p>
+                                    <p><strong>Passport Number:</strong> @ViewBag.PersonalInfo?.PassportNumber</p>
+                                    <p><strong>Date of Birth:</strong> @(ViewBag.PersonalInfo?.DateOfBirth.ToString("dd MMM yyyy"))</p>
+                                    <p><strong>Citizenship:</strong> @ViewBag.PersonalInfo?.Citizenship</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Last Name:</strong> @ViewBag.PersonalInfo?.LastName</p>
+                                    <p><strong>Gender:</strong> @ViewBag.PersonalInfo?.Gender</p>
+                                    <p><strong>Country of Birth:</strong> @ViewBag.PersonalInfo?.CountryOfBirth</p>
+                                    <p><strong>City of Birth:</strong> @ViewBag.PersonalInfo?.CityOfBirth</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#contactInfo">
+                            <i class="fas fa-address-book me-2"></i> Contact Information
+                        </button>
+                    </h2>
+                    <div id="contactInfo" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Phone:</strong> @ViewBag.PersonalInfo?.Phone</p>
+                                    <p><strong>Country of Residence:</strong> @ViewBag.PersonalInfo?.CountryOfResidence</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Address:</strong> @ViewBag.PersonalInfo?.Address</p>
+                                    <p><strong>Father's Name:</strong> @ViewBag.PersonalInfo?.FatherName</p>
+                                    <p><strong>Mother's Name:</strong> @ViewBag.PersonalInfo?.MotherName</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#educationalInfo">
+                            <i class="fas fa-graduation-cap me-2"></i> Educational Information
+                        </button>
+                    </h2>
+                    <div id="educationalInfo" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>School Name:</strong> @ViewBag.EducationalInfo?.SchoolName</p>
+                                    <p><strong>Graduation Year:</strong> @ViewBag.EducationalInfo?.GraduationYear</p>
+                                    <p><strong>GPA:</strong> @ViewBag.EducationalInfo?.GPA</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Country:</strong> @ViewBag.EducationalInfo?.Country</p>
+                                    <p><strong>City:</strong> @ViewBag.EducationalInfo?.City</p>
+                                    <p><strong>Language Proficiency:</strong> @ViewBag.EducationalInfo?.LanguageProficiency</p>
+                                    <p><strong>Language Exam Score:</strong> @ViewBag.EducationalInfo?.LanguageExamScore</p>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <p><strong>Blue Card Owner:</strong> @(ViewBag.EducationalInfo?.IsBlueCardOwner == true ? "Yes" : "No")</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p><strong>Dual Citizenship:</strong> @(ViewBag.PersonalInfo?.HasDualCitizenship == true ? "Yes" : "No")</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-between mt-4">
+                <a href="/Application/Documents?id=@Model.Id" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Documents
+                </a>
+                <form action="/Application/SubmitApplication" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="ProgramSelectionId" value="@Model.Id" />
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-check"></i> Submit Application
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 

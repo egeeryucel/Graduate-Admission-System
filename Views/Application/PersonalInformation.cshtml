@@ -1,0 +1,262 @@
+@model GraduationAdmissionSystem.Models.PersonalInformation
+
+@{
+    ViewData["Title"] = "Personal Information";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="progress mb-4" style="height: 25px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">Step 2 of 5: Personal Information</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4 text-center display-6">@ViewData["Title"]</h2>
+
+            <form asp-action="PersonalInformation" method="post">
+                <input type="hidden" asp-for="ProgramSelectionId" />
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4><i class="fas fa-user-edit me-2"></i>Personal Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="FirstName" class="form-label fw-bold"></label>
+                                <input asp-for="FirstName" class="form-control" placeholder="Enter your first name" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="LastName" class="form-label fw-bold"></label>
+                                <input asp-for="LastName" class="form-control" placeholder="Enter your last name" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Gender" class="form-label fw-bold"></label>
+                                <select asp-for="Gender" class="form-select">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <span asp-validation-for="Gender" class="text-danger"></span>
+                            </div>
+                             <div class="col-md-6 mb-3">
+                                <label asp-for="DateOfBirth" class="form-label fw-bold"></label>
+                                <input asp-for="DateOfBirth" class="form-control" type="date" />
+                                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="CountryOfBirth" class="form-label fw-bold"></label>
+                                <select asp-for="CountryOfBirth" class="form-select" required>
+                                    <option value="">Select Country of Birth</option>
+                                </select>
+                                <span asp-validation-for="CountryOfBirth" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="CityOfBirth" class="form-label fw-bold"></label>
+                                <input asp-for="CityOfBirth" class="form-control" placeholder="Enter your city of birth" />
+                                <span asp-validation-for="CityOfBirth" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Citizenship" class="form-label fw-bold"></label>
+                                <select asp-for="Citizenship" class="form-select" id="citizenshipDropdown" required>
+                                    <option value="">Select Citizenship</option>
+                                </select>
+                                <span asp-validation-for="Citizenship" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check mt-3">
+                                    <input asp-for="HasDualCitizenship" class="form-check-input" type="checkbox" id="hasDualCitizenshipCheckbox" />
+                                    <label asp-for="HasDualCitizenship" class="form-check-label fw-bold"></label>
+                                    <span asp-validation-for="HasDualCitizenship" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="PassportNumber" class="form-label fw-bold"></label>
+                                <input asp-for="PassportNumber" class="form-control" placeholder="Enter your passport number (if applicable)" />
+                                <span asp-validation-for="PassportNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4><i class="fas fa-address-book me-2"></i>Contact Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Phone" class="form-label fw-bold"></label>
+                                <input asp-for="Phone" class="form-control" placeholder="Enter your phone number" />
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="CountryOfResidence" class="form-label fw-bold"></label>
+                                <select asp-for="CountryOfResidence" class="form-select" required>
+                                    <option value="">Select Country of Residence</option>
+                                </select>
+                                <span asp-validation-for="CountryOfResidence" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Address" class="form-label fw-bold"></label>
+                            <textarea asp-for="Address" class="form-control" rows="3" placeholder="Enter your full address"></textarea>
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="FatherName" class="form-label fw-bold"></label>
+                                <input asp-for="FatherName" class="form-control" placeholder="Enter father's full name"/>
+                                <span asp-validation-for="FatherName" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="MotherName" class="form-label fw-bold"></label>
+                                <input asp-for="MotherName" class="form-control" placeholder="Enter mother's full name" />
+                                <span asp-validation-for="MotherName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between mt-5 mb-4">
+                    <a asp-action="ProgramSelection" asp-route-programSelectionId="@Model.ProgramSelectionId" class="btn btn-outline-secondary btn-lg"><i class="fas fa-arrow-left me-2"></i>Previous</a>
+                    <button type="submit" class="btn btn-primary btn-lg">Next<i class="fas fa-arrow-right ms-2"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            const countries = [
+                "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Australia",
+                "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium",
+                "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil",
+                "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Chad",
+                "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus",
+                "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt",
+                "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland",
+                "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala",
+                "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India",
+                "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan",
+                "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan",
+                "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania",
+                "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta",
+                "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco",
+                "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal",
+                "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan",
+                "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
+                "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Samoa",
+                "San Marino", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore",
+                "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka",
+                "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
+                "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
+                "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom",
+                "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam",
+                "Yemen", "Zambia", "Zimbabwe"
+            ];
+            const countrySelects = ['CountryOfBirth', 'CountryOfResidence'];
+            countrySelects.forEach(function (selectId) {
+                const select = $(`#${selectId}`);
+                const existingCountries = new Set();
+                select.find('option').each(function() {
+                    const value = $(this).val();
+                    if (value) existingCountries.add(value);
+                });
+                countries.forEach(function (country) {
+                    if (!existingCountries.has(country)) {
+                        select.append($('<option>', {
+                            value: country,
+                            text: country
+                        }));
+                    }
+                });
+                select.on('change', function() {
+                    const value = $(this).val();
+                    if (!value) {
+                        $(this).addClass('is-invalid');
+                    } else {
+                        $(this).removeClass('is-invalid');
+                    }
+                });
+            });
+            const hasDualCitizenshipCheckbox = $('#hasDualCitizenshipCheckbox');
+            const citizenshipDropdown = $('#citizenshipDropdown');
+            const countryOfBirthDropdown = $('#CountryOfBirth'); 
+
+            function toggleCitizenshipDropdown() {
+                if (hasDualCitizenshipCheckbox.is(':checked')) {
+                    citizenshipDropdown.prop('disabled', false);
+                } else {
+                    citizenshipDropdown.prop('disabled', true);
+                    citizenshipDropdown.val(countryOfBirthDropdown.val()).trigger('change'); 
+                }
+            }
+            toggleCitizenshipDropdown();
+            hasDualCitizenshipCheckbox.on('change', toggleCitizenshipDropdown);
+            countryOfBirthDropdown.on('change', function() {
+                if (!hasDualCitizenshipCheckbox.is(':checked')) {
+                    citizenshipDropdown.val($(this).val()).trigger('change');
+                }
+            });
+            const citizenshipSelectElement = document.getElementById('citizenshipDropdown');
+            if (citizenshipSelectElement) {
+                const existingCitizenshipCountries = new Set();
+                $(citizenshipSelectElement).find('option').each(function() {
+                    const value = $(this).val();
+                    if (value) existingCitizenshipCountries.add(value);
+                });
+
+                countries.forEach(function(country) { 
+                    if (!existingCitizenshipCountries.has(country)) {
+                        const option = document.createElement('option');
+                        option.value = country;
+                        option.text = country;
+                        citizenshipSelectElement.appendChild(option);
+                    }
+                });
+                 const currentCitizenshipValue = "@Model.Citizenship";
+                if (currentCitizenshipValue && !citizenshipDropdown.prop('disabled')) {
+                    citizenshipDropdown.val(currentCitizenshipValue);
+                }
+            }
+            const form = $('form');
+            form.on('submit', function (e) {
+                let emptyCountries = [];
+                countrySelects.forEach(function(selectId) {
+                    const select = $(`#${selectId}`);
+                    const value = select.val();
+                    
+                    if (!value) {
+                        emptyCountries.push(select.attr('name'));
+                    }
+                });
+                if (emptyCountries.length > 0) {
+                    console.log("Empty countries found:", emptyCountries);
+                }
+            });
+        });
+    </script>
+} 

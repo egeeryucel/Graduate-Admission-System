@@ -1,0 +1,168 @@
+@model GraduationAdmissionSystem.ViewModels.StudentApplicationItem
+
+
+
+<form asp-action="SaveProgramSelection" asp-controller="BulkApplication" asp-area="Agency" method="post" class="program-selection-form">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="TemporaryId" />
+    <input type="hidden" asp-for="CurrentStep" /> 
+    <input type="hidden" asp-for="StudentName" />
+
+   
+    <input type="hidden" asp-for="ProgramSelectionData.Id" />
+    <input type="hidden" asp-for="ProgramSelectionData.ApplicationStatus" /> 
+    <input type="hidden" asp-for="ProgramSelectionData.FacultyInstitute" id="programSelection_FacultyInstitute_@Model.TemporaryId" />
+
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="ProgramSelectionData.Language" class="form-label">Language of the Program</label>
+        <select asp-for="ProgramSelectionData.Language" class="form-select language-select" data-target-id="@Model.TemporaryId">
+            <option value="" disabled selected>Select a Language</option> 
+            <option value="English">English</option>
+            <option value="Turkish">Turkish</option>
+        </select>
+        <span asp-validation-for="ProgramSelectionData.Language" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ProgramSelectionData.ProgramLevel" class="form-label">Program Level</label>
+        <select asp-for="ProgramSelectionData.ProgramLevel" class="form-select program-level-select" data-target-id="@Model.TemporaryId" asp-items="ViewBag.ProgramLevels">
+        </select>
+        <span asp-validation-for="ProgramSelectionData.ProgramLevel" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Available Programs (Select up to 2)</label>
+        <div id="programList_@Model.TemporaryId" class="list-group program-list-container" style="max-height: 200px; overflow-y: auto; border: 1px solid #ced4da; padding: 10px; border-radius: .25rem;">
+            <div class="alert alert-info">Please select language and program level to see available programs.</div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">Save Program Selection & Next</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel/Back to List</a>
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        const tempId = "@Model.TemporaryId";
+        const form = $('#programList_' + tempId).closest('form');
+        let selectedProgramsArray_ = []; 
+
+        let initiallySelectedProgramNames_ = [];
+        @if (Model.ProgramSelectionData != null && Model.ProgramSelectionData.ProgramChoices != null && Model.ProgramSelectionData.ProgramChoices.Any())
+        {
+            <text>
+            initiallySelectedProgramNames_ = @Html.Raw(Json.Serialize(Model.ProgramSelectionData.ProgramChoices.Select(pc => pc.ProgramName).ToList()));
+            </text>
+        }
+        console.log(`[${tempId}] Initially selected program names:`, initiallySelectedProgramNames_);
+
+        function updateProgramHiddenFields_() {
+            form.find('.program-choice-hidden').remove();
+            selectedProgramsArray_.forEach((prog, index) => {
+                form.append(`<input type="hidden" class="program-choice-hidden" name="ProgramSelectionData.ProgramChoices[${index}].ProgramName" value="${prog.name}" />`);
+                form.append(`<input type="hidden" class="program-choice-hidden" name="ProgramSelectionData.ProgramChoices[${index}].Choice" value="${index + 1}" />`);
+            });
+            
+            if(selectedProgramsArray_.length > 0) {
+                $('#programSelection_FacultyInstitute_' + tempId).val(selectedProgramsArray_[0].facultyInstitute);
+            }
+        }
+
+        function loadPrograms_() {
+            console.log(`[${tempId}] loadPrograms_ called`);
+            const language = form.find('.language-select').val();
+            const level = form.find('.program-level-select').val();
+            const programListContainer = $('#programList_' + tempId);
+
+            console.log(`[${tempId}] Language: ${language}, Level: ${level}`);
+
+            programListContainer.html('<div class="alert alert-info"><i class="fas fa-spinner fa-spin me-2"></i> Loading programs...</div>');
+            selectedProgramsArray_ = [];
+            updateProgramHiddenFields_();
+
+            if (language && level) {
+                console.log(`[${tempId}] AJAX call to GetAvailablePrograms with lang=${language}, level=${level}`);
+                $.ajax({
+                    url: '@Url.Action("GetAvailablePrograms", "BulkApplication", new { area = "Agency" })',
+                    type: 'GET',
+                    data: { language: language, level: level },
+                    success: function (response) {
+                        console.log(`[${tempId}] AJAX success. Response:`, response);
+                        let html = '';
+                        if (response.message) {
+                            html = `<div class="alert alert-warning"><i class="fas fa-exclamation-triangle me-2"></i> ${response.message}</div>`;
+                        }
+                        else if (Array.isArray(response) && response.length > 0) {
+                            response.forEach(function (program) {
+                                const programValue = program.name;
+                                const programDisplay = program.displayName;
+                                const programId = `program_${tempId}_${programValue.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '')}`;
+                                
+                                let isChecked = initiallySelectedProgramNames_.includes(programValue);
+
+                                html += `
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input program-checkbox" type="checkbox" value="${programValue}" id="${programId}" data-faculty="${program.facultyInstitute}" ${(isChecked ? "checked" : "")}>
+                                        <label class="form-check-label" for="${programId}">
+                                            ${programDisplay} <span class="text-muted">(${program.facultyInstitute})</span>
+                                        </label>
+                                    </div>
+                                `;
+                            });
+                        } else {
+                            html = '<div class="alert alert-warning"><i class="fas fa-exclamation-triangle me-2"></i> No programs found for this selection.</div>';
+                        }
+                        programListContainer.html(html);
+                         programListContainer.find('.program-checkbox:checked').each(function() {
+                            const name = $(this).val();
+                            const faculty = $(this).data('faculty');
+                            if (!selectedProgramsArray_.find(p => p.name === name)) {
+                                 selectedProgramsArray_.push({ name: name, facultyInstitute: faculty });
+                            }
+                        });
+                        updateProgramHiddenFields_();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error(`[${tempId}] AJAX error. Status: ${textStatus}, Error: ${errorThrown}`, jqXHR);
+                        programListContainer.html('<div class="alert alert-danger">Error loading programs. Please check console.</div>');
+                    }
+                });
+            } else {
+                console.log(`[${tempId}] Language or Level not selected. Language: '${language}', Level: '${level}'. Not making AJAX call.`);
+                programListContainer.html('<div class="alert alert-info">Please select language and program level to see available programs.</div>');
+            }
+        }
+
+        form.find('.language-select, .program-level-select').change(function () {
+            console.log(`[${tempId}] Dropdown changed:`, this);
+            loadPrograms_();
+        });
+        $('#programList_' + tempId).on('change', '.program-checkbox', function () {
+            const programName = $(this).val();
+            const faculty = $(this).data('faculty');
+
+            if ($(this).is(':checked')) {
+                if (selectedProgramsArray_.length < 2) {
+                    selectedProgramsArray_.push({ name: programName, facultyInstitute: faculty });
+                } else {
+                    $(this).prop('checked', false); 
+                    alert("You can select a maximum of 2 programs.");
+                }
+            } else {
+                selectedProgramsArray_ = selectedProgramsArray_.filter(p => p.name !== programName);
+            }
+            updateProgramHiddenFields_();
+        });
+        console.log(`[${tempId}] Initial check for loading programs.`);
+        if (form.find('.language-select').val() && form.find('.program-level-select').val()) {
+            console.log(`[${tempId}] Initial load will call loadPrograms_().`);
+            loadPrograms_();
+        } else {
+            console.log(`[${tempId}] Initial load - language or level not set. Language: '${form.find('.language-select').val()}', Level: '${form.find('.program-level-select').val()}'.`);
+        }
+    });
+</script> 

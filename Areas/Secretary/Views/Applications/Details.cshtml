@@ -1,0 +1,310 @@
+@model GraduationAdmissionSystem.Models.ProgramSelection
+@{
+    ViewData["Title"] = "Application Details";
+    var personalInfo = ViewBag.PersonalInfo as GraduationAdmissionSystem.Models.PersonalInformation;
+    var educationalInfo = ViewBag.EducationalInfo as GraduationAdmissionSystem.Models.EducationalInformation;
+    var documents = ViewBag.Documents as IEnumerable<GraduationAdmissionSystem.Models.Document>;
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Application Review</h2>
+                </div>
+                <div class="card-body">
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["Error"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Application Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th style="width: 40%">Tracking Number</th>
+                                            <td><span class="badge bg-primary">@Model.TrackingNumber</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Status</th>
+                                            <td><span class="badge bg-success">@Model.ApplicationStatus</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Language</th>
+                                            <td>@Model.Language</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Submission Date</th>
+                                            <td>@Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Applicant Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th style="width: 40%">Name</th>
+                                            <td>@personalInfo.FirstName @personalInfo.LastName</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Gender</th>
+                                            <td>@personalInfo.Gender</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Date of Birth</th>
+                                            <td>@personalInfo.DateOfBirth.ToString("yyyy-MM-dd")</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Passport</th>
+                                            <td>@personalInfo.PassportNumber</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Citizenship</th>
+                                            <td>@personalInfo.Citizenship</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Program Choices</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Priority</th>
+                                                    <th>Program Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var program in Model.ProgramChoices.OrderBy(pc => pc.Choice))
+                                                {
+                                                    <tr>
+                                                        <td>Choice @program.Choice</td>
+                                                        <td>@program.ProgramName</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Educational Background</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th style="width: 40%">School Name</th>
+                                            <td>@educationalInfo.SchoolName</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Country</th>
+                                            <td>@educationalInfo.Country</td>
+                                        </tr>
+                                        <tr>
+                                            <th>City</th>
+                                            <td>@educationalInfo.City</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Graduation Year</th>
+                                            <td>@educationalInfo.GraduationYear</td>
+                                        </tr>
+                                        <tr>
+                                            <th>GPA</th>
+                                            <td>@educationalInfo.GPA.ToString("0.00")/4.00</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Language Exam</th>
+                                            <td>@educationalInfo.LanguageProficiency: @educationalInfo.LanguageExamScore.ToString("0.00")</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Additional Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th style="width: 60%">Blue Card Owner</th>
+                                            <td>@(educationalInfo.IsBlueCardOwner ? "Yes" : "No")</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Dual Citizenship</th>
+                                            <td>@(personalInfo.HasDualCitizenship ? "Yes" : "No")</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="card mt-3">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Contact Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <th style="width: 40%">Phone</th>
+                                            <td>@personalInfo.Phone</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Address</th>
+                                            <td>@personalInfo.Address</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Country of Residence</th>
+                                            <td>@personalInfo.CountryOfResidence</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Email</th>
+                                            <td>@(Model.User?.Email ?? "Not provided")</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Required Documents</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Document Type</th>
+                                                    <th>Original Filename</th>
+                                                    <th>Upload Date</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var document in documents)
+                                                {
+                                                    <tr>
+                                                        <td>@document.DocumentType</td>
+                                                        <td>@document.OriginalFileName</td>
+                                                        <td>@document.UploadDate.ToString("yyyy-MM-dd HH:mm")</td>
+                                                        <td>
+                                                            <a href="@Url.Action("ViewDocument", "Application", new { id = document.Id, area = "" })" class="btn btn-sm btn-info" target="_blank">
+                                                                <i class="fas fa-eye me-1"></i> View
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Application Decision</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="card border-warning">
+                                                <div class="card-header bg-warning text-dark">
+                                                    <h5 class="mb-0">Send Back for Review</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p>If the application requires corrections or additional information, send it back to the candidate for review.</p>
+                                                    <form method="post" action="@Url.Action("SendBackForReview", "Applications", new { area = "Secretary" })">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="id" value="@Model.Id" />
+                                                        <div class="mb-3">
+                                                            <label for="reviewComment" class="form-label">Review Comment <span class="text-danger">*</span></label>
+                                                            <textarea class="form-control" id="reviewComment" name="reviewComment" rows="3" required placeholder="Please specify what needs to be corrected or added..."></textarea>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-warning">
+                                                            <i class="fas fa-reply me-1"></i> Send for Review
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card border-success">
+                                                <div class="card-header bg-success text-white">
+                                                    <h5 class="mb-0">Forward to Department</h5>
+                                                </div>
+                                                <div class="card-body">
+                                                    <p>If the application is complete and all documents are verified, forward it to the department head for evaluation.</p>
+                                                    <form method="post" action="@Url.Action("ForwardToDepartment", "Applications", new { area = "Secretary" })">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="id" value="@Model.Id" />
+
+                                                        <div class="mb-3">
+                                                            <label for="departmentChairId" class="form-label">Select Department Chair:</label>
+                                                            <select name="departmentChairId" id="departmentChairId" class="form-select" asp-items="ViewBag.DepartmentChairs">
+                                                                <option value="">-- Select Chair --</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="alert alert-info">
+                                                            <i class="fas fa-info-circle me-1"></i> By forwarding this application, you confirm that all documents have been verified and the application is ready for department review.
+                                                        </div>
+                                                        <button type="submit" class="btn btn-success">
+                                                            <i class="fas fa-share me-1"></i> Forward to Selected Department Chair
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="@Url.Action("Pending", "Applications", new { area = "Secretary" })" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-2"></i> Back to Pending Applications
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

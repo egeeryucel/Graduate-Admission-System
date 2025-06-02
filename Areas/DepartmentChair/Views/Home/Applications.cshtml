@@ -1,0 +1,66 @@
+@model IEnumerable<GraduationAdmissionSystem.Models.ProgramSelection>
+
+@{
+    ViewData["Title"] = "Applications for Review";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info" role="alert">
+        There are currently no applications assigned to you for review.
+    </div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Applicant Name
+                </th>
+                <th>
+                    First Choice Program
+                 </th>
+                 <th>
+                    Department
+                 </th>
+                <th>
+                   Date Forwarded
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model)
+    {
+        var firstChoice = item.ProgramChoices?.OrderBy(pc => pc.Choice).FirstOrDefault();
+        var departmentName = firstChoice?.Department?.Name ?? "N/A";
+        var applicantName = $"{item.User?.FirstName} {item.User?.LastName}";
+
+            <tr>
+                <td>
+                    @applicantName
+                </td>
+                <td>
+                    @(firstChoice?.ProgramName ?? "N/A")
+                </td>
+                 <td>
+                    @departmentName
+                </td>
+                <td>
+                    @item.ForwardedToDepartmentAt?.ToLocalTime().ToString("yyyy-MM-dd HH:mm")
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+}
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
+</div> 

@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "Check Application Status";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2>Check Application Status</h2>
+                </div>
+                <div class="card-body">
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle me-2"></i> @TempData["Error"]
+                        </div>
+                    }
+                    
+                    <p>Enter your application tracking number (starting with "AP" followed by 6 digits) to check your application status.</p>
+                    
+                    <form asp-action="CheckStatus" method="post">
+                        <div class="mb-3">
+                            <label for="trackingNumber" class="form-label">Tracking Number</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                <input type="text" class="form-control" id="trackingNumber" name="trackingNumber" 
+                                       placeholder="e.g. AP123456" required pattern="AP\d{6}">
+                            </div>
+                            <div class="form-text">Your tracking number should be in the format "AP" followed by 6 digits.</div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search me-2"></i> Check Status
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="mt-4 text-center">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i> Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

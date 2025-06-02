@@ -1,0 +1,293 @@
+@model GraduationAdmissionSystem.ViewModels.StudentApplicationItem
+@using GraduationAdmissionSystem.ViewModels // For StudentTemporaryDocument
+
+
+
+@{ 
+    var allPossibleTypes = (ViewBag.AllPossibleDocumentTypes as List<string>) ?? new List<string>();
+    var requiredDocTypes = (ViewBag.RequiredDocTypes as List<string>) ?? new List<string>();
+    var uploadedTempDocs = (Model.TemporaryDocuments as List<StudentTemporaryDocument>) ?? new List<StudentTemporaryDocument>();
+    var uploadedTempDocTypes = uploadedTempDocs.Select(d => d.DocumentType).ToList();
+    var missingRequired = requiredDocTypes.Except(uploadedTempDocTypes).ToList();
+}
+
+<form asp-action="SaveDocumentsStep" asp-controller="BulkApplication" asp-area="Agency" method="post" class="documents-form" id="documentsForm_@Model.TemporaryId">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="TemporaryId" />
+    <input type="hidden" asp-for="CurrentStep" />
+    <input type="hidden" asp-for="StudentName" />
+
+    
+    <div id="temporaryDocumentsContainer_@Model.TemporaryId">
+        @for (int i = 0; i < uploadedTempDocs.Count; i++)
+        {
+            <input type="hidden" name="TemporaryDocuments[@i].TempDocId" value="@uploadedTempDocs[i].TempDocId" />
+            <input type="hidden" name="TemporaryDocuments[@i].DocumentType" value="@uploadedTempDocs[i].DocumentType" />
+            <input type="hidden" name="TemporaryDocuments[@i].FileName" value="@uploadedTempDocs[i].FileName" />
+        }
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4><i class="fas fa-file-upload me-2"></i>Manage Documents for @Model.StudentName</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-5 mb-3">
+                    <label for="documentTypeSelect_@Model.TemporaryId" class="form-label fw-bold">Document Type</label>
+                    <select id="documentTypeSelect_@Model.TemporaryId" class="form-select document-type-select" data-studentid="@Model.TemporaryId">
+                        <option value="" disabled selected>-- Select Document Type --</option>
+                        @foreach (var docType in allPossibleTypes)
+                        {
+                            var displayText = docType;
+                            var isDisabled = uploadedTempDocTypes.Contains(docType);
+                            if (requiredDocTypes.Contains(docType)) { displayText += " (*)"; }
+                            <option value="@docType" disabled="@isDisabled">@displayText @(isDisabled ? "- Added" : "")</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-5 mb-3">
+                    <label for="documentFile_@Model.TemporaryId" class="form-label fw-bold">Select File</label>
+                    <input type="file" id="documentFile_@Model.TemporaryId" class="form-control document-file-input" data-studentid="@Model.TemporaryId" />
+                    <small class="form-text text-muted">PDF, JPG, PNG (Max 10MB will be checked on final submit)</small>
+                </div>
+                <div class="col-md-2 mb-3 align-self-end">
+                    <button type="button" class="btn btn-success w-100 add-document-button" data-studentid="@Model.TemporaryId"><i class="fas fa-plus"></i> Add</button>
+                </div>
+            </div>
+            <div id="clientSideDocumentError_@Model.TemporaryId" class="alert alert-danger mt-2 client-side-document-error" style="display:none;"></div>
+
+            <hr />
+            <h5>Added Documents:</h5>
+            @if (!uploadedTempDocs.Any())
+            {
+                <p id="noDocumentsMessage_@Model.TemporaryId" class="no-documents-message">No documents added yet.</p>
+            }
+            <ul class="list-group document-list" id="documentList_@Model.TemporaryId">
+                @foreach (var doc in uploadedTempDocs)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center" data-tempdocid="@doc.TempDocId">
+                        <span>
+                            <i class="fas fa-file-alt me-2"></i>@doc.FileName (@doc.DocumentType)
+                            @if (requiredDocTypes.Contains(doc.DocumentType)) { <span class="badge bg-danger ms-1">Required</span> }
+                        </span>
+                        <button type="button" class="btn btn-sm btn-outline-danger remove-document-button" data-tempdocid="@doc.TempDocId" data-studentid="@Model.TemporaryId"><i class="fas fa-trash"></i></button>
+                    </li>
+                }
+            </ul>
+
+            @if (missingRequired.Any())
+            {
+                <div class="alert alert-warning mt-3 missing-docs-warning" id="missingDocsWarning_@Model.TemporaryId">
+                    <p class="fw-bold mb-1">Required documents still missing:</p>
+                    <ul class="mb-0">
+                        @foreach (var docName in missingRequired)
+                        {
+                            <li>@docName (*)</li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4 mb-3">
+        <button type="button" class="btn btn-outline-secondary btn-lg" onclick="goBackToStep(3, '@Model.TemporaryId')"><i class="fas fa-arrow-left me-2"></i>Previous (Educational Info)</button>
+        <button type="submit" class="btn btn-primary btn-lg">Save Documents & Next <i class="fas fa-arrow-right ms-2"></i></button>
+    </div>
+</form>
+
+<script type="text/javascript">
+   
+    (function() {
+        const studentId = "@Model.TemporaryId";
+        const initialDocs = @Html.Raw(Json.Serialize(Model.TemporaryDocuments ?? new List<StudentTemporaryDocument>()));
+        const requiredServerDocs = @Html.Raw(Json.Serialize(ViewBag.RequiredDocTypes as List<string> ?? new List<string>()));
+
+        let currentTempDocs = [...initialDocs]; 
+
+        function getDomElements(sId) {
+            return {
+                typeSelect: document.getElementById(`documentTypeSelect_${sId}`),
+                fileInput: document.getElementById(`documentFile_${sId}`),
+                errorDiv: document.getElementById(`clientSideDocumentError_${sId}`),
+                listElement: document.getElementById(`documentList_${sId}`),
+                noDocsMessageContainer: document.getElementById(`noDocumentsMessageContainer_${sId}`),
+                hiddenContainer: document.getElementById(`temporaryDocumentsContainer_${sId}`),
+                missingWarningDiv: document.getElementById(`missingDocsWarning_${sId}`),
+                addBtn: document.getElementById(`addDocumentBtn_${sId}`)
+            };
+        }
+
+        function updateHiddenFields() {
+            const els = getDomElements(studentId);
+            if (!els.hiddenContainer) return;
+            els.hiddenContainer.innerHTML = ''; 
+            currentTempDocs.forEach((doc, index) => {
+                els.hiddenContainer.innerHTML += `<input type="hidden" name="TemporaryDocuments[${index}].TempDocId" value="${doc.tempDocId || doc.TempDocId}" />`;
+                els.hiddenContainer.innerHTML += `<input type="hidden" name="TemporaryDocuments[${index}].DocumentType" value="${doc.documentType || doc.DocumentType}" />`;
+                els.hiddenContainer.innerHTML += `<input type="hidden" name="TemporaryDocuments[${index}].FileName" value="${doc.fileName || doc.FileName}" />`;
+                els.hiddenContainer.innerHTML += `<input type="hidden" name="TemporaryDocuments[${index}].TemporaryFilePath" value="${doc.temporaryFilePath || ''}" />`;
+                els.hiddenContainer.innerHTML += `<input type="hidden" name="TemporaryDocuments[${index}].ContentType" value="${doc.contentType || ''}" />`;
+                els.hiddenContainer.innerHTML += `<input type="hidden" name="TemporaryDocuments[${index}].FileSize" value="${doc.fileSize || 0}" />`;
+            });
+        }
+
+        function renderDocumentList() {
+            const els = getDomElements(studentId);
+            if (!els.listElement) return;
+            els.listElement.innerHTML = '';
+            
+            if (els.noDocsMessageContainer) {
+                 els.noDocsMessageContainer.innerHTML = currentTempDocs.length === 0 ? '<p id="noDocumentsMessage_@Model.TemporaryId">No documents added yet.</p>' : '';
+            }
+
+            currentTempDocs.forEach(doc => {
+                let docType = doc.documentType || doc.DocumentType;
+                let docName = doc.fileName || doc.FileName;
+                let docId = doc.tempDocId || doc.TempDocId;
+                let requiredBadge = requiredServerDocs.includes(docType) ? '<span class="badge bg-danger ms-1">Required</span>' : '';
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.dataset.tempdocid = docId;
+                li.innerHTML = `<span><i class="fas fa-file-alt me-2"></i>${docName} (${docType})${requiredBadge}</span>
+                                <button type="button" class="btn btn-sm btn-outline-danger remove-doc-btn" data-tempdocid="${docId}"><i class="fas fa-trash"></i></button>`;
+                els.listElement.appendChild(li);
+            });
+            updateHiddenFields();
+            updateMissingDocsWarning();
+            updateDocumentTypeDropdown();
+        }
+        
+        function updateMissingDocsWarning() {
+            const els = getDomElements(studentId);
+            if (!els.missingWarningDiv) return;
+
+            let currentUploadedDocTypes = currentTempDocs.map(d => d.documentType || d.DocumentType);
+            let currentMissing = requiredServerDocs.filter(rt => !currentUploadedDocTypes.includes(rt));
+            
+            if (currentMissing.length > 0) {
+                let listHtml = '';
+                currentMissing.forEach(docName => { listHtml += `<li>${docName} (*)</li>`; });
+                els.missingWarningDiv.innerHTML = `<p class="fw-bold mb-1">Required documents still missing:</p><ul class="mb-0">${listHtml}</ul>`;
+                els.missingWarningDiv.style.display = 'block';
+            } else {
+                els.missingWarningDiv.style.display = 'none';
+            }
+        }
+
+        function updateDocumentTypeDropdown() {
+            const els = getDomElements(studentId);
+            if (!els.typeSelect) return;
+            const currentlyAddedTypes = currentTempDocs.map(d => d.documentType || d.DocumentType);
+            Array.from(els.typeSelect.options).forEach(option => {
+                if (option.value) { 
+                    option.disabled = currentlyAddedTypes.includes(option.value);
+                    let originalText = option.getAttribute('data-original-text');
+                    if (!originalText) {
+                        originalText = option.text;
+                        option.setAttribute('data-original-text', originalText);
+                    }
+                    if (option.disabled) {
+                        if (!originalText.includes("- Added")) { 
+                             option.text = originalText.replace(/ \(.*\)$/, '').replace(" (*)","") + (requiredServerDocs.includes(option.value) ? " (*)" : "") + " - Added";
+                        }
+                    } else {
+                         option.text = originalText;
+                    }
+                }
+            });
+        }
+
+        function handleAddDocument() {
+            const els = getDomElements(studentId);
+            if (!els.typeSelect || !els.fileInput || !els.errorDiv) return;
+
+            els.errorDiv.style.display = 'none';
+            els.errorDiv.textContent = '';
+
+            const selectedType = els.typeSelect.value;
+            const file = els.fileInput.files[0];
+
+            if (!selectedType) {
+                els.errorDiv.textContent = 'Please select a document type.';
+                els.errorDiv.style.display = 'block';
+                return;
+            }
+            if (!file) {
+                els.errorDiv.textContent = 'Please select a file.';
+                els.errorDiv.style.display = 'block';
+                return;
+            }
+            if (currentTempDocs.find(d => (d.documentType || d.DocumentType) === selectedType)) {
+                els.errorDiv.textContent = `Document type '${selectedType}' has already been added.`;
+                els.errorDiv.style.display = 'block';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('studentTemporaryId', studentId);
+
+            fetch('/Agency/BulkApplication/UploadTemporaryFile', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const newDoc = {
+                        tempDocId: 'client_id_' + Date.now() + Math.random().toString(36).substr(2, 9),
+                        documentType: selectedType,
+                        fileName: data.originalFileName,
+                        temporaryFilePath: data.temporaryFilePath,
+                        contentType: data.contentType,
+                        fileSize: data.fileSize
+                    };
+                    currentTempDocs.push(newDoc);
+                    renderDocumentList();
+                    
+                    els.typeSelect.value = '';
+                    els.fileInput.value = ''; 
+                } else {
+                    els.errorDiv.textContent = data.message || 'File upload failed.';
+                    els.errorDiv.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error uploading file:', error);
+                els.errorDiv.textContent = 'An error occurred during file upload. See console for details.';
+                els.errorDiv.style.display = 'block';
+            });
+        }
+
+        function handleRemoveDocument(event) {
+            const button = event.target.closest('.remove-doc-btn');
+            if (!button) return;
+            const tempDocIdToRemove = button.dataset.tempdocid;
+            currentTempDocs = currentTempDocs.filter(doc => (doc.tempDocId || doc.TempDocId) !== tempDocIdToRemove);
+            renderDocumentList();
+        }
+
+       
+        document.addEventListener('DOMContentLoaded', function() {
+           
+            
+            const addButton = document.querySelector(`.add-document-button[data-studentid='${studentId}']`);
+            if (addButton) {
+                addButton.addEventListener('click', handleAddDocument);
+            }
+
+            const documentList = document.getElementById(`documentList_${studentId}`);
+            if (documentList) {
+                documentList.addEventListener('click', handleRemoveDocument);
+            }
+            
+            
+            renderDocumentList();
+        });
+
+    })(); 
+</script> 

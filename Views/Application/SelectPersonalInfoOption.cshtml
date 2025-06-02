@@ -1,0 +1,147 @@
+@model GraduationAdmissionSystem.Models.ProgramSelection
+@{
+    ViewData["Title"] = "Select Personal Information Option";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Select Personal Information Option</h2>
+                </div>
+                <div class="card-body">
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["Error"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <div class="alert alert-info">
+                        <p><i class="fas fa-info-circle me-2"></i> You have started a new application.</p>
+                        <p>Application Tracking Number: <strong>@Model.TrackingNumber</strong></p>
+                    </div>
+
+                    @if (ViewBag.HasPreviousApplication)
+                    {
+                        <div class="card mb-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Previous Personal Information Available</h5>
+                            </div>
+                            <div class="card-body">
+                                <p>We found your previous personal information in our system. Please select one of the following options:</p>
+                                
+                                <div class="row mt-4">
+                                    <div class="col-md-4">
+                                        <div class="card h-100">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-copy fa-4x mb-3 text-primary"></i>
+                                                <h5 class="card-title">Use Existing Information</h5>
+                                                <p class="card-text">Reuse your existing personal information without any changes.</p>
+                                                <form method="post" asp-action="UseExistingPersonalInfo">
+                                                    <input type="hidden" name="id" value="@Model.Id" />
+                                                    <input type="hidden" name="previousApplicationId" value="@ViewBag.LatestApplicationId" />
+                                                    <button type="submit" class="btn btn-primary mt-2">
+                                                        <i class="fas fa-copy me-1"></i> Use Existing
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="card h-100">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-edit fa-4x mb-3 text-warning"></i>
+                                                <h5 class="card-title">Edit Existing Information</h5>
+                                                <p class="card-text">Make changes to your existing personal information.</p>
+                                                <form method="post" asp-action="EditExistingPersonalInfo">
+                                                    <input type="hidden" name="id" value="@Model.Id" />
+                                                    <input type="hidden" name="previousApplicationId" value="@ViewBag.LatestApplicationId" />
+                                                    <button type="submit" class="btn btn-warning mt-2">
+                                                        <i class="fas fa-edit me-1"></i> Edit Existing
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="card h-100">
+                                            <div class="card-body text-center">
+                                                <i class="fas fa-file-alt fa-4x mb-3 text-success"></i>
+                                                <h5 class="card-title">Enter New Information</h5>
+                                                <p class="card-text">Enter your personal information from scratch.</p>
+                                                <form method="post" asp-action="UseNewPersonalInfo">
+                                                    <input type="hidden" name="id" value="@Model.Id" />
+                                                    <button type="submit" class="btn btn-success mt-2">
+                                                        <i class="fas fa-plus-circle me-1"></i> Enter New
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <h6>Your previous personal information:</h6>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-sm">
+                                            <tr>
+                                                <th class="table-light" style="width: 25%">Name</th>
+                                                <td>@ViewBag.PreviousPersonalInfo.FirstName @ViewBag.PreviousPersonalInfo.LastName</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="table-light">Passport</th>
+                                                <td>@ViewBag.PreviousPersonalInfo.PassportNumber</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="table-light">Gender</th>
+                                                <td>@ViewBag.PreviousPersonalInfo.Gender</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="table-light">Date of Birth</th>
+                                                <td>@ViewBag.PreviousPersonalInfo.DateOfBirth.ToString("yyyy-MM-dd")</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="table-light">Country of Birth</th>
+                                                <td>@ViewBag.PreviousPersonalInfo.CountryOfBirth</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="table-light">Phone</th>
+                                                <td>@ViewBag.PreviousPersonalInfo.Phone</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <p>This seems to be your first application or we couldn't find any completed previous applications.</p>
+                                <p>You will need to enter your personal information for this application.</p>
+                                <form method="post" asp-action="UseNewPersonalInfo">
+                                    <input type="hidden" name="id" value="@Model.Id" />
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-arrow-right me-1"></i> Continue to Personal Information
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                    
+                    <div class="mt-3">
+                        <a href="@Url.Action("ProgramSelection", "Application")" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-1"></i> Back to Program Selection
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

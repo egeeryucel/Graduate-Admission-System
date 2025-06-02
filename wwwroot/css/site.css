@@ -1,0 +1,75 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  background-color: #f8f9fa; 
+  color: #212529; 
+  line-height: 1.6;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.card {
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .5rem; 
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, .075);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: #e9ecef; 
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    font-weight: 500;
+}
+
+.btn {
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.table {
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, .075);
+}
+
+.table th {
+    background-color: #e9ecef;
+}
+
+.alert {
+    border-radius: .5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, .075);
+}
+
+.footer {
+    font-size: 0.9em;
+}
+
+.form-step-buttons {
+    position: sticky;
+    bottom: 0;
+    background-color: #ffffff; 
+    padding: 1rem;
+    border-top: 1px solid #dee2e6; 
+    z-index: 10; 
+    box-shadow: 0 -0.125rem 0.25rem rgba(0, 0, 0, .075);
+}

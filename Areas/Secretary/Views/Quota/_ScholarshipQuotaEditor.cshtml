@@ -1,0 +1,19 @@
+@model GraduationAdmissionSystem.Models.ScholarshipQuota
+
+<div class="scholarship-entry form-row mb-2">
+    <input type="hidden" asp-for="ScholarshipQuotaId" />
+    <input type="hidden" asp-for="ProgramQuotaId" />
+    <div class="col-md-5">
+        <label asp-for="ScholarshipPercentage" class="control-label"></label>
+        <input asp-for="ScholarshipPercentage" class="form-control" type="number" min="0" max="100" placeholder="e.g., 0, 25, 50"/>
+        <span asp-validation-for="ScholarshipPercentage" class="text-danger"></span>
+    </div>
+    <div class="col-md-5">
+        <label asp-for="AllocatedQuota" class="control-label"></label>
+        <input asp-for="AllocatedQuota" class="form-control" type="number" min="0" placeholder="Number of students"/>
+        <span asp-validation-for="AllocatedQuota" class="text-danger"></span>
+    </div>
+    <div class="col-md-2 align-self-end">
+        <button type="button" class="btn btn-danger btn-sm remove-scholarship-entry">Remove</button>
+    </div>
+</div> 

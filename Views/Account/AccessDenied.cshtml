@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i> Access Denied</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger" role="alert">
+                        <h4>You do not have permission to access this resource.</h4>
+                        <p>You are trying to access a page that requires different permissions than your current user role.</p>
+                    </div>
+                    <p>Please contact the administrator if you believe this is an error or if you need additional permissions.</p>
+                    <hr />
+                    <div class="d-flex justify-content-between">
+                        <a asp-controller="Home" asp-action="Index" asp-area="" class="btn btn-primary">
+                            <i class="fas fa-home me-1"></i> Go to Home Page
+                        </a>
+                        <a href="javascript:history.back()" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-1"></i> Go Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

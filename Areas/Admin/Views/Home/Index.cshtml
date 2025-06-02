@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mt-4">
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">User Management</h5>
+                <p class="card-text">Create and manage system users.</p>
+                <div class="d-grid gap-2 d-md-block">
+                     <a asp-action="ManageUsers" asp-controller="Home" asp-area="Admin" class="btn btn-primary">Manage Users</a>
+                     <a asp-action="CreateUser" asp-controller="Home" asp-area="Admin" class="btn btn-success">Create New User</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

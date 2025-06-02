@@ -1,0 +1,179 @@
+@model GraduationAdmissionSystem.Models.ProgramSelection
+
+@{
+    ViewData["Title"] = "Application Status";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="mb-0">Application Status</h2>
+                        <span class="badge bg-light text-dark fs-5">@Model.TrackingNumber</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-@(Model.ApplicationStatus == "Submitted" ? "success" : "warning")">
+                        <h4 class="mb-0">
+                            <i class="fas @(Model.ApplicationStatus == "Submitted" ? "fa-check-circle" : "fa-clock")"></i>
+                            Status: @Model.ApplicationStatus
+                        </h4>
+                    </div>
+                    @if (Model.ApplicationStatus == "Needs Review" && !string.IsNullOrWhiteSpace(Model.ReviewComment))
+                    {
+                        <div class="alert alert-danger mt-3">
+                            <h5><i class="fas fa-exclamation-triangle me-2"></i> Department Chair's Review Comment</h5>
+                            <p class="mb-0">@Model.ReviewComment</p>
+                        </div>
+                    }
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header bg-secondary text-white">
+                                    <h5 class="mb-0">Program Selection</h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-borderless">
+                                        <tr>
+                                            <th>Language:</th>
+                                            <td>@Model.Language</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Application Date:</th>
+                                            <td>@Model.CreatedAt.ToString("dd MMM yyyy HH:mm")</td>
+                                        </tr>
+                                    </table>
+                                    
+                                    <h6 class="mt-3">Program Choices:</h6>
+                                    <ol>
+                                        @foreach (var choice in Model.ProgramChoices.OrderBy(c => c.Choice))
+                                        {
+                                            <li>@choice.ProgramName</li>
+                                        }
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header bg-secondary text-white">
+                                    <h5 class="mb-0">Personal Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    @if (ViewBag.PersonalInfo != null)
+                                    {
+                                        var personalInfo = ViewBag.PersonalInfo;
+                                        <table class="table table-borderless">
+                                            <tr>
+                                                <th>Name:</th>
+                                                <td>@personalInfo.FirstName @personalInfo.LastName</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Gender:</th>
+                                                <td>@personalInfo.Gender</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Date of Birth:</th>
+                                                <td>@personalInfo.DateOfBirth.ToString("dd MMM yyyy")</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Citizenship:</th>
+                                                <td>@personalInfo.Citizenship</td>
+                                            </tr>
+                                        </table>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-muted">Personal information not available.</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header bg-secondary text-white">
+                                    <h5 class="mb-0">Educational Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    @if (ViewBag.EducationalInfo != null)
+                                    {
+                                        var educationalInfo = ViewBag.EducationalInfo;
+                                        <table class="table table-borderless">
+                                            <tr>
+                                                <th>School Name:</th>
+                                                <td>@educationalInfo.SchoolName</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Country:</th>
+                                                <td>@educationalInfo.Country</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Graduation Year:</th>
+                                                <td>@educationalInfo.GraduationYear</td>
+                                            </tr>
+                                            <tr>
+                                                <th>GPA:</th>
+                                                <td>@educationalInfo.GPA.ToString("F2")</td>
+                                            </tr>
+                                        </table>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-muted">Educational information not available.</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header bg-secondary text-white">
+                                    <h5 class="mb-0">Documents</h5>
+                                </div>
+                                <div class="card-body">
+                                    @if (ViewBag.Documents != null && ((IEnumerable<dynamic>)ViewBag.Documents).Any())
+                                    {
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Document Type</th>
+                                                    <th>Upload Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var doc in ViewBag.Documents)
+                                                {
+                                                    <tr>
+                                                        <td>@doc.DocumentType</td>
+                                                        <td>@doc.UploadDate.ToString("dd MMM yyyy")</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-muted">No documents uploaded.</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 text-center">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">
+                            <i class="fas fa-home me-2"></i> Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

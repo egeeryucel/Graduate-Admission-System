@@ -1,0 +1,149 @@
+@model GraduationAdmissionSystem.Models.ProgramSelection
+@{
+    ViewData["Title"] = "Application Details";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]: @Model.User?.FirstName @Model.User?.LastName</h2>
+    <hr />
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Applicant Information</h4>
+            <dl class="row">
+                <dt class="col-sm-4">Tracking Number:</dt>
+                <dd class="col-sm-8">@Model.TrackingNumber</dd>
+
+                <dt class="col-sm-4">Full Name:</dt>
+                <dd class="col-sm-8">@Model.User?.FirstName @Model.User?.LastName</dd>
+
+                <dt class="col-sm-4">Email:</dt>
+                <dd class="col-sm-8">@Model.User?.Email</dd>
+
+                <dt class="col-sm-4">Application Date:</dt>
+                <dd class="col-sm-8">@Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")</dd>
+
+                <dt class="col-sm-4">Application Period:</dt>
+                <dd class="col-sm-8">@Model.ApplicationPeriod?.Name</dd>
+
+                <dt class="col-sm-4">Application Status:</dt>
+                <dd class="col-sm-8"><span class="badge bg-info text-dark">@Model.ApplicationStatus</span></dd>
+
+                <dt class="col-sm-4">Language of Instruction:</dt>
+                <dd class="col-sm-8">@Model.Language</dd>
+
+                <dt class="col-sm-4">Program Level:</dt>
+                <dd class="col-sm-8">@Model.ProgramLevel</dd>
+
+                <dt class="col-sm-4">Faculty/Institute:</dt>
+                <dd class="col-sm-8">@Model.FacultyInstitute</dd>
+            </dl>
+
+            <h4>Program Choices</h4>
+            @if (Model.ProgramChoices != null && Model.ProgramChoices.Any())
+            {
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Choice</th>
+                            <th>Program Name</th>
+                            <th>Department</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var choice in Model.ProgramChoices.OrderBy(c => c.Choice))
+                        {
+                            <tr>
+                                <td>@choice.Choice</td>
+                                <td>@choice.ProgramName</td>
+                                <td>@choice.Department?.Name</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No program choices found.</p>
+            }
+
+            @if (Model.PersonalInformation != null)
+            {
+                <h4>Personal Information</h4>
+                <dl class="row">
+                    <dt class="col-sm-4">Date of Birth:</dt>
+                    <dd class="col-sm-8">@Model.PersonalInformation.DateOfBirth.ToString("yyyy-MM-dd")</dd>
+                    <dt class="col-sm-4">Gender:</dt>
+                    <dd class="col-sm-8">@Model.PersonalInformation.Gender</dd>
+                    <dt class="col-sm-4">Nationality:</dt>
+                    <dd class="col-sm-8">@Model.PersonalInformation.Citizenship</dd>
+                    <dt class="col-sm-4">Passport Number:</dt>
+                    <dd class="col-sm-8">@Model.PersonalInformation.PassportNumber</dd>
+                     <dt class="col-sm-4">Country of Residence:</dt>
+                    <dd class="col-sm-8">@Model.PersonalInformation.CountryOfResidence</dd>
+                    <dt class="col-sm-4">City of Residence:</dt>
+                    <dd class="col-sm-8">@Model.PersonalInformation.CityOfResidence</dd>
+                    <dt class="col-sm-4">Address:</dt>
+                    <dd class="col-sm-8">@Model.PersonalInformation.Address</dd>
+                    <dt class="col-sm-4">Phone Number:</dt>
+                    <dd class="col-sm-8">@Model.PersonalInformation.Phone</dd>
+                </dl>
+            }
+
+            @if (Model.EducationalInformation != null)
+            {
+                <h4>Educational Information</h4>
+                <dl class="row">
+                    <dt class="col-sm-4">School Name:</dt>
+                    <dd class="col-sm-8">@Model.EducationalInformation.SchoolName</dd>
+                    <dt class="col-sm-4">Graduation Year:</dt>
+                    <dd class="col-sm-8">@Model.EducationalInformation.GraduationYear</dd>
+                    <dt class="col-sm-4">Degree:</dt>
+                    <dd class="col-sm-8">@Model.EducationalInformation.Degree</dd>
+                    <dt class="col-sm-4">Major:</dt>
+                    <dd class="col-sm-8">@Model.EducationalInformation.Major</dd>
+                    <dt class="col-sm-4">GPA:</dt>
+                    <dd class="col-sm-8">@Model.EducationalInformation.GPA</dd>
+                    <dt class="col-sm-4">Country of School:</dt>
+                    <dd class="col-sm-8">@Model.EducationalInformation.Country</dd>
+                </dl>
+            }
+        </div>
+
+        <div class="col-md-4">
+            <h4>Uploaded Documents</h4>
+            @if (Model.Documents != null && Model.Documents.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var doc in Model.Documents)
+                    {
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>@doc.DocumentType:</strong> @doc.OriginalFileName
+                                <br />
+                                <small class="text-muted">Uploaded: @doc.UploadDate.ToShortDateString() | Size: @((doc.FileSize / 1024.0).ToString("F1")) KB</small>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No documents uploaded for this application.</p>
+            }
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div> 

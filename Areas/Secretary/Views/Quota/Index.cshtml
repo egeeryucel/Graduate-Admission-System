@@ -1,0 +1,73 @@
+@model IEnumerable<GraduationAdmissionSystem.Models.ProgramQuota>
+
+@{ 
+    ViewData["Title"] = "Manage Program Quotas";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New Program Quota</a>
+</p>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+@if (TempData["ErrorMessage"] != null) 
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Application Period</th>
+            <th>Program Name</th>
+            <th>Total Quota</th>
+            <th>Scholarship Details</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="5" class="text-center">No program quotas found.</td>
+            </tr>
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.ApplicationPeriod.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Program.Name) (@Html.DisplayFor(modelItem => item.Program.Level))</td>
+                <td>@Html.DisplayFor(modelItem => item.TotalQuota)</td>
+                <td>
+                    @if (item.ScholarshipQuotas != null && item.ScholarshipQuotas.Any())
+                    {
+                        <ul>
+                            @foreach (var sq in item.ScholarshipQuotas.OrderBy(s => s.ScholarshipPercentage))
+                            {
+                                <li>@sq.ScholarshipPercentage% : @sq.AllocatedQuota students</li>
+                            }
+                        </ul>
+                        <div><strong>Total Allocated for Scholarships: @item.ScholarshipQuotas.Sum(sq => sq.AllocatedQuota)</strong></div>
+                    }
+                    else
+                    {
+                        <span>No scholarship distribution defined.</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProgramQuotaId" class="btn btn-sm btn-warning">Edit</a> 
+                    <a asp-action="Delete" asp-route-id="@item.ProgramQuotaId" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> 

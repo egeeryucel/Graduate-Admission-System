@@ -1,0 +1,247 @@
+@model GraduationAdmissionSystem.Models.ProgramSelection
+
+@{
+    ViewData["Title"] = "Start New Application";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="progress mb-4">
+                <div class="progress-bar" role="progressbar" style="width: 10%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">10%</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4">My Applications</h2>
+
+            @if (!string.IsNullOrEmpty(ViewBag.TrackingNumber))
+            {
+                <div class="alert alert-info mb-4">
+                    <h5><i class="fas fa-tag me-2"></i> Your Tracking Number: <span class="text-primary">@ViewBag.TrackingNumber</span></h5>
+                    <p class="mb-0">Keep this number to track your application later.</p>
+                </div>
+            }
+
+            @if (ViewBag.ExistingApplications != null && ViewBag.ExistingApplications.Count > 0)
+            {
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Existing Applications</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Application ID</th>
+                                        <th>Faculty/Institute</th>
+                                        <th>Language</th>
+                                        <th>Status</th>
+                                        <th>Created Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var app in ViewBag.ExistingApplications)
+                                    {
+                                        <tr>
+                                            <td>@app.Id.ToString("D6")</td>
+                                            <td>@app.FacultyInstitute</td>
+                                            <td>@app.Language</td>
+                                            <td>
+                                                @if (app.ApplicationStatus == "Draft")
+                                                {
+                                                    <span class="badge bg-warning">Draft</span>
+                                                }
+                                                else if (app.ApplicationStatus == "Submitted")
+                                                {
+                                                    <span class="badge bg-success">Submitted</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">@app.ApplicationStatus</span>
+                                                }
+                                            </td>
+                                            <td>@app.CreatedAt.ToString("dd MMM yyyy")</td>
+                                            <td>
+                                                @if (app.ApplicationStatus == "Draft")
+                                                {
+                                                    <a href="@Url.Action("PersonalInformation", "Application", new { id = app.Id })" class="btn btn-sm btn-primary">Continue</a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@Url.Action("ReviewApplication", "Application", new { id = app.Id })" class="btn btn-sm btn-info">View</a>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Start New Application</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/Application/ProgramSelection" method="post" id="programSelectionForm">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        
+                        <div class="mb-3">
+                            <label for="language" class="form-label">language of the program</label>
+                            <select id="language" name="language" class="form-select" required>
+                                <option value="" selected disabled>Select a Language</option>
+                                <option value="English">English</option>
+                                <option value="Turkish">Turkish</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="programLevel" class="form-label">Program Level</label>
+                            <select id="programLevel" name="level" class="form-select" asp-items="ViewBag.ProgramLevels" required>
+                                <option value="" selected disabled>Select a Program Level</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Programs</label>
+                            <div id="programList" class="list-group">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i> Please select language and program level
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" id="submitButton" disabled>
+                            <i class="fas fa-arrow-right"></i> Continue
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            let selectedPrograms = [];
+            
+            function updateSubmitButtonState() {
+                const languageSelected = $('#language').val() !== "";
+                const levelSelected = $('#programLevel').val() !== "";
+                if (languageSelected && levelSelected && selectedPrograms.length > 0) {
+                    $('#submitButton').prop('disabled', false);
+                } else {
+                    $('#submitButton').prop('disabled', true);
+                }
+            }
+            
+            function loadPrograms() {
+                const language = $('#language').val();
+                const level = $('#programLevel').val();
+                console.log("Selected Language:", language);
+                console.log("Selected Level:", level);
+                
+                $('#programList').html('<div class="alert alert-info"><i class="fas fa-spinner fa-spin me-2"></i> Loading programs...</div>');
+                $('#submitButton').prop('disabled', true);
+                selectedPrograms = [];
+
+                if (language && level) {
+                    console.log("Making AJAX GET call to /Application/GetAvailablePrograms with lang & level");
+                    $.ajax({
+                        url: '/Application/GetAvailablePrograms',
+                        type: 'GET',
+                        data: { language, level },
+                        success: function(response) {
+                            console.log("AJAX Success. Received response RAW:", response);
+                            try {
+                                console.log("AJAX Success. Received response JSON:", JSON.stringify(response)); 
+                            } catch (e) {
+                                console.error("Could not stringify response:", e);
+                            }
+                            let html = '';
+                            
+                            if (response.message) { 
+                                html = `<div class="alert alert-warning"><i class="fas fa-exclamation-triangle me-2"></i> ${response.message}</div>`;
+                            } else if (Array.isArray(response) && response.length > 0) {
+                                html = '<div class="mb-2">Select up to 2 programs in order of preference:</div>';
+                                response.forEach(function(program) {
+                                    const programValue = program.name; 
+                                    const programDisplay = program.displayName;
+                                    const programId = `program-${programValue.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '')}`;
+                                    html += `
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input program-checkbox" type="checkbox" value="${programValue}" id="${programId}" name="programs"> 
+                                            <label class="form-check-label" for="${programId}">
+                                                ${programDisplay} <span class="text-muted">(${program.facultyInstitute})</span>
+                                            </label>
+                                        </div>
+                                    `;
+                                });
+                            } else { 
+                                 html = '<div class="alert alert-warning"><i class="fas fa-exclamation-triangle me-2"></i> No programs found for this selection.</div>';
+                            }
+                            
+                            $('#programList').html(html);
+                            updateSubmitButtonState(); 
+                            $('.program-checkbox').change(function() {
+                                const programName = $(this).val();
+                                
+                                if ($(this).is(':checked')) {
+                                    if (selectedPrograms.length < 2) {
+                                        selectedPrograms.push(programName);
+                                    } else {
+                                        $(this).prop('checked', false);
+                                        alert('You can select maximum 2 programs');
+                                    }
+                                } else {
+                                    selectedPrograms = selectedPrograms.filter(p => p !== programName);
+                                }
+                                
+                                console.log("Selected programs:", selectedPrograms);
+                                updateSubmitButtonState();
+                            });
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.error("AJAX Error:", textStatus, errorThrown);
+                            console.error("Response Text:", jqXHR.responseText);
+                            $('#programList').html('<div class="alert alert-danger"><i class="fas fa-times-circle me-2"></i> Error loading programs. Please try again or contact support.</div>');
+                            updateSubmitButtonState();
+                        }
+                    });
+                } else {
+                    $('#programList').html('<div class="alert alert-info"><i class="fas fa-info-circle"></i> Please select language and program level</div>');
+                    updateSubmitButtonState();
+                    console.log("Language or Level missing.");
+                }
+            }
+
+            $('#language, #programLevel').change(loadPrograms);
+            
+            $('#programSelectionForm').submit(function(e) {
+                if (selectedPrograms.length === 0) {
+                    alert('Please select at least one program');
+                    e.preventDefault();
+                    return;
+                }
+
+                $(this).find('input[name="selectedPrograms"]').remove();
+                selectedPrograms.forEach(function(programName) {
+                    $(this).append(`<input type="hidden" name="selectedPrograms" value="${programName}">`);
+                }.bind(this));
+                
+            });
+
+            updateSubmitButtonState();
+            $('#programList').html('<div class="alert alert-info"><i class="fas fa-info-circle"></i> Please select language and program level</div>');
+        });
+    </script>
+} 

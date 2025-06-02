@@ -1,0 +1,129 @@
+@model IEnumerable<GraduationAdmissionSystem.Models.ApplicationUser>
+@inject Microsoft.AspNetCore.Identity.UserManager<GraduationAdmissionSystem.Models.ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = ViewData["Title"] ?? "Manage Users"; // Use title from controller
+    bool showingDeleted = (ViewData["ShowDeleted"] as bool?) ?? false;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="CreateUser" class="btn btn-success">Create New User</a>
+    @if (showingDeleted)
+    {
+        <a asp-action="ManageUsers" asp-route-showDeleted="false" class="btn btn-info">Show Active Users</a>
+    }
+    else
+    {
+        <a asp-action="ManageUsers" asp-route-showDeleted="true" class="btn btn-secondary">Show Deleted Users</a>
+    }
+</p>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+@if (TempData["Warning"] != null)
+{
+    <div class="alert alert-warning">@TempData["Warning"]</div>
+}
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
+            </th>
+            <th>
+                Role(s)
+            </th>
+            <th>
+                Managed Departments (if Chair)
+            </th>
+             <th>
+                Status
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+    var userRoles = await UserManager.GetRolesAsync(item);
+    var roleString = string.Join(", ", userRoles);
+    var managedDepartments = item.ManagedDepartments?.Select(d => d.Name).ToList() ?? new List<string?>();
+    var departmentString = managedDepartments.Any() ? string.Join(", ", managedDepartments.Where(name => name != null)) : "N/A";
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @roleString
+            </td>
+             <td>
+                @departmentString
+            </td>
+            <td>
+                @if (item.IsDeleted)
+                {
+                    <span class="badge bg-danger">Deleted</span>
+                }
+                else if (!item.IsActive)
+                {
+                    <span class="badge bg-warning text-dark">Inactive</span>
+                }
+                else
+                {
+                    <span class="badge bg-success">Active</span>
+                }
+            </td>
+            <td>
+                @if (item.Email.Equals("admin@admin.com", StringComparison.OrdinalIgnoreCase) && item.IsDeleted)
+                {
+                    <span>(Cannot reactivate main admin)</span>
+                }
+                else if (item.Email.Equals("admin@admin.com", StringComparison.OrdinalIgnoreCase))
+                {
+                     <span>(No actions for main admin)</span>
+                }
+                else if (item.IsDeleted)
+                {
+                    <form asp-action="ReactivateUser" asp-route-id="@item.Id" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-success">Reactivate</button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-action="EditUser" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a> 
+                    <form asp-action="DeleteUser" asp-route-id="@item.Id" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to mark this user as deleted? They will not be able to log in but their data will be preserved.');">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Back to Admin Dashboard</a>
+</div> 

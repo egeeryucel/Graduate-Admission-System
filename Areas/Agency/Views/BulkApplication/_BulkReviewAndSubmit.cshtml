@@ -1,0 +1,201 @@
+@model GraduationAdmissionSystem.ViewModels.StudentApplicationItem
+
+
+<div class="accordion" id="bulkReviewAccordion_@Model.TemporaryId">
+
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="bulkProgInfoHeading_@Model.TemporaryId">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#bulkProgInfo_@Model.TemporaryId" aria-expanded="true" aria-controls="bulkProgInfo_@Model.TemporaryId">
+                <i class="fas fa-university me-2"></i> Applied Programs
+            </button>
+        </h2>
+        <div id="bulkProgInfo_@Model.TemporaryId" class="accordion-collapse collapse show" aria-labelledby="bulkProgInfoHeading_@Model.TemporaryId">
+            <div class="accordion-body">
+                @if (Model.ProgramSelectionData != null && Model.ProgramSelectionData.ProgramChoices != null && Model.ProgramSelectionData.ProgramChoices.Any())
+                {
+                    <p><strong>Language of Program:</strong> @Model.ProgramSelectionData.Language</p>
+                    <p><strong>Program Level:</strong> @Model.ProgramSelectionData.ProgramLevel</p>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Preference</th>
+                                    <th>Program Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var program in Model.ProgramSelectionData.ProgramChoices.OrderBy(pc => pc.Choice))
+                                {
+                                    <tr>
+                                        <td>@program.Choice</td>
+                                        <td>
+                                            @program.ProgramName
+                                            @if (Model.ProgramSelectionData.ProgramLevel == "MasterNonThesis")
+                                            {
+                                                <span> Yüksek Lisans Programı (Tezsiz)</span>
+                                            }
+                                            else if (Model.ProgramSelectionData.ProgramLevel == "MasterThesis")
+                                            {
+                                                <span> Yüksek Lisans Programı (Tezli)</span>
+                                            }
+                                            else if (Model.ProgramSelectionData.ProgramLevel == "PhD")
+                                            {
+                                                <span> Doktora Programı</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">No program selections made yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="bulkPersonalInfoHeading_@Model.TemporaryId">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bulkPersonalInfo_@Model.TemporaryId" aria-expanded="false" aria-controls="bulkPersonalInfo_@Model.TemporaryId">
+                <i class="fas fa-user me-2"></i> Personal Information
+            </button>
+        </h2>
+        <div id="bulkPersonalInfo_@Model.TemporaryId" class="accordion-collapse collapse" aria-labelledby="bulkPersonalInfoHeading_@Model.TemporaryId">
+            <div class="accordion-body">
+                @if (Model.PersonalInformationData != null)
+                {
+                    var pi = Model.PersonalInformationData;
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>First Name:</strong> @pi.FirstName</p>
+                            <p><strong>Last Name:</strong> @pi.LastName</p>
+                            <p><strong>Gender:</strong> @pi.Gender</p>
+                            <p><strong>Date of Birth:</strong> @(pi.DateOfBirth.ToString("dd MMM yyyy"))</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Country of Birth:</strong> @pi.CountryOfBirth</p>
+                            <p><strong>City of Birth:</strong> @pi.CityOfBirth</p>
+                            <p><strong>Citizenship:</strong> @pi.Citizenship</p>
+                            <p><strong>Dual Citizenship:</strong> @(pi.HasDualCitizenship ? "Yes" : "No")</p>
+                            <p><strong>Passport Number:</strong> @pi.PassportNumber</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <h5>Contact Details</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Phone:</strong> @pi.Phone</p>
+                            <p><strong>Address:</strong> @pi.Address</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Country of Residence:</strong> @pi.CountryOfResidence</p>
+                            <p><strong>Father's Name:</strong> @pi.FatherName</p>
+                            <p><strong>Mother's Name:</strong> @pi.MotherName</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">No personal information provided yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="bulkEduInfoHeading_@Model.TemporaryId">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bulkEduInfo_@Model.TemporaryId" aria-expanded="false" aria-controls="bulkEduInfo_@Model.TemporaryId">
+                <i class="fas fa-graduation-cap me-2"></i> Educational Information
+            </button>
+        </h2>
+        <div id="bulkEduInfo_@Model.TemporaryId" class="accordion-collapse collapse" aria-labelledby="bulkEduInfoHeading_@Model.TemporaryId">
+            <div class="accordion-body">
+                @if (Model.EducationalInformationData != null)
+                {
+                    var ei = Model.EducationalInformationData;
+                    <h5>Additional Information</h5>
+                    <p><strong>Blue Card Owner:</strong> @(ei.IsBlueCardOwner ? "Yes" : "No")</p>
+                    <hr />
+                    <h5>Secondary School Information</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>School Name:</strong> @ei.SchoolName</p>
+                            <p><strong>Graduation Year:</strong> @ei.GraduationYear</p>
+                            <p><strong>GPA:</strong> @ei.GPA.ToString("0.00")</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Country:</strong> @ei.Country</p>
+                            <p><strong>City:</strong> @ei.City</p>
+                            <p><strong>Language Proficiency:</strong> @ei.LanguageProficiency</p>
+                            <p><strong>Language Exam Score:</strong> @ei.LanguageExamScore.ToString("0.00")</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">No educational information provided yet.</p>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="bulkUploadedDocsHeading_@Model.TemporaryId">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bulkUploadedDocs_@Model.TemporaryId" aria-expanded="false" aria-controls="bulkUploadedDocs_@Model.TemporaryId">
+                <i class="fas fa-file-upload me-2"></i> Uploaded Documents
+            </button>
+        </h2>
+        <div id="bulkUploadedDocs_@Model.TemporaryId" class="accordion-collapse collapse" aria-labelledby="bulkUploadedDocsHeading_@Model.TemporaryId">
+            <div class="accordion-body">
+                @if (Model.TemporaryDocuments != null && Model.TemporaryDocuments.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Document Type</th>
+                                    <th>File Name</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var doc in Model.TemporaryDocuments)
+                                {
+                                    <tr>
+                                        <td>@doc.DocumentType</td>
+                                        <td>@doc.FileName</td>
+                                        <td><span class="badge bg-info text-dark">Prepared by Agency</span></td> 
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">No documents have been prepared for this student in the current session.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4 d-flex justify-content-between form-step-buttons">
+    <div>
+        <form asp-area="Agency" asp-controller="BulkApplication" asp-action="PreviousToDocuments" method="post" class="d-inline">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-light me-2">
+                <i class="fas fa-arrow-left"></i> Previous (Documents)
+            </button>
+        </form>
+    </div>
+    <div>
+        <form asp-area="Agency" asp-controller="BulkApplication" asp-action="FinishCurrentStudentEditing" method="post" class="d-inline">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-info me-2">
+                Finish Editing This Student (Go to List)
+            </button>
+        </form>
+    </div>
+</div>

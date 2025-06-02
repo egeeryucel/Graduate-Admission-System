@@ -1,0 +1,147 @@
+@model GraduationAdmissionSystem.ViewModels.StudentApplicationItem
+
+
+
+<form asp-action="SavePersonalInformation" asp-controller="BulkApplication" asp-area="Agency" method="post" class="personal-information-form">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="TemporaryId" />
+    <input type="hidden" asp-for="CurrentStep" />
+    <input type="hidden" asp-for="StudentName" />
+    <input type="hidden" asp-for="PersonalInformationData.Id" /> 
+    <input type="hidden" asp-for="PersonalInformationData.ProgramSelectionId" />
+
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4><i class="fas fa-user-edit me-2"></i>Personal Details for @Model.StudentName</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PersonalInformationData.FirstName" class="form-label fw-bold"></label>
+                    <input asp-for="PersonalInformationData.FirstName" class="form-control" placeholder="Enter first name" />
+                    <span asp-validation-for="PersonalInformationData.FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PersonalInformationData.LastName" class="form-label fw-bold"></label>
+                    <input asp-for="PersonalInformationData.LastName" class="form-control" placeholder="Enter last name" />
+                    <span asp-validation-for="PersonalInformationData.LastName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PersonalInformationData.Gender" class="form-label fw-bold"></label>
+                    <select asp-for="PersonalInformationData.Gender" class="form-select" asp-items="ViewBag.Genders">
+                    </select>
+                    <span asp-validation-for="PersonalInformationData.Gender" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PersonalInformationData.DateOfBirth" class="form-label fw-bold"></label>
+                    <input asp-for="PersonalInformationData.DateOfBirth" class="form-control" type="date" />
+                    <span asp-validation-for="PersonalInformationData.DateOfBirth" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PersonalInformationData.CountryOfBirth" class="form-label fw-bold"></label>
+                    <select asp-for="PersonalInformationData.CountryOfBirth" class="form-select" asp-items="ViewBag.Countries">
+                    </select>
+                    <span asp-validation-for="PersonalInformationData.CountryOfBirth" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PersonalInformationData.CityOfBirth" class="form-label fw-bold"></label>
+                    <input asp-for="PersonalInformationData.CityOfBirth" class="form-control" placeholder="Enter city of birth" />
+                    <span asp-validation-for="PersonalInformationData.CityOfBirth" class="text-danger"></span>
+                </div>
+            </div>
+            
+            <div class="row">
+                 <div class="col-md-6 mb-3">
+                    <label asp-for="PersonalInformationData.Citizenship" class="form-label fw-bold"></label>
+                    <select asp-for="PersonalInformationData.Citizenship" class="form-select" asp-items="ViewBag.Countries">
+                       
+                    </select>
+                    <span asp-validation-for="PersonalInformationData.Citizenship" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3 align-self-center"> 
+                    <div class="form-check mt-4">
+                        <input asp-for="PersonalInformationData.HasDualCitizenship" class="form-check-input" type="checkbox" />
+                        <label asp-for="PersonalInformationData.HasDualCitizenship" class="form-check-label fw-bold"></label>
+                        <span asp-validation-for="PersonalInformationData.HasDualCitizenship" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12 mb-3"> 
+                    <label asp-for="PersonalInformationData.PassportNumber" class="form-label fw-bold"></label>
+                    <input asp-for="PersonalInformationData.PassportNumber" class="form-control" placeholder="Enter passport number (if applicable)" />
+                    <span asp-validation-for="PersonalInformationData.PassportNumber" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4><i class="fas fa-address-book me-2"></i>Contact Details</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PersonalInformationData.Phone" class="form-label fw-bold"></label>
+                    <input asp-for="PersonalInformationData.Phone" class="form-control" placeholder="Enter phone number" />
+                    <span asp-validation-for="PersonalInformationData.Phone" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PersonalInformationData.Email" class="form-label fw-bold"></label>
+                    <input asp-for="PersonalInformationData.Email" type="email" class="form-control" placeholder="Enter email address" />
+                    <span asp-validation-for="PersonalInformationData.Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3"> 
+                    <label asp-for="PersonalInformationData.CountryOfResidence" class="form-label fw-bold"></label>
+                    <select asp-for="PersonalInformationData.CountryOfResidence" class="form-select" asp-items="ViewBag.Countries">
+                    </select>
+                    <span asp-validation-for="PersonalInformationData.CountryOfResidence" class="text-danger"></span>
+                </div>
+                 <div class="col-md-6 mb-3"> 
+                 </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="PersonalInformationData.Address" class="form-label fw-bold"></label>
+                <textarea asp-for="PersonalInformationData.Address" class="form-control" rows="3" placeholder="Enter your full address"></textarea>
+                <span asp-validation-for="PersonalInformationData.Address" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PersonalInformationData.FatherName" class="form-label fw-bold"></label>
+                    <input asp-for="PersonalInformationData.FatherName" class="form-control" placeholder="Enter father's full name"/>
+                    <span asp-validation-for="PersonalInformationData.FatherName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PersonalInformationData.MotherName" class="form-label fw-bold"></label>
+                    <input asp-for="PersonalInformationData.MotherName" class="form-control" placeholder="Enter mother's full name" />
+                    <span asp-validation-for="PersonalInformationData.MotherName" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4 mb-3 form-step-buttons">
+        <button type="button" class="btn btn-outline-secondary btn-lg" onclick="goBackToStep(1, '@Model.TemporaryId')"><i class="fas fa-arrow-left me-2"></i>Previous (Program Selection)</button>
+        <button type="submit" class="btn btn-primary btn-lg">Save Personal Info & Next <i class="fas fa-arrow-right ms-2"></i></button>
+    </div>
+</form>
+
+<script>
+    function goBackToStep(step, tempId) {
+        window.location.href = '@Url.Action("EditStudentApplication", "BulkApplication", new { area = "Agency" })?tempId=' + tempId + '&targetStep=' + step;
+    }
+</script> 

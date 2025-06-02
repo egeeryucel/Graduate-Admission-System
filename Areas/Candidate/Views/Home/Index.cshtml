@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "Candidate Dashboard";
+    bool isApplicationPeriodOpen = ViewBag.IsApplicationPeriodOpen ?? false;
+    string? applicationPeriodName = ViewBag.ApplicationPeriodName;
+}
+
+<div class="container">
+    <h2>Candidate Dashboard</h2>
+
+    @if (!isApplicationPeriodOpen)
+    {
+        <div class="alert alert-warning mt-3" role="alert">
+            <h4 class="alert-heading">Application Period Closed</h4>
+            <p>The application period is currently closed. Please check back later for future application periods.</p>
+        </div>
+    }
+    else if (!string.IsNullOrEmpty(applicationPeriodName))
+    {
+        <div class="alert alert-info mt-3" role="alert">
+            The application period for <strong>@applicationPeriodName</strong> is currently open.
+        </div>
+    }
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">New Application</h5>
+                    <p class="card-text">Start a new graduate program application.</p>
+                    @if (isApplicationPeriodOpen)
+                    {
+                        <a href="@Url.Action("ProgramSelection", "Application", new { area = "" })" class="btn btn-primary"><i class="fas fa-plus-circle me-2"></i>Create Application</a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary" disabled><i class="fas fa-plus-circle me-2"></i>Create Application</button>
+                        <small class="d-block mt-2 text-muted">Applications are closed.</small>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">My Applications</h5>
+                    <p class="card-text">View and track your existing applications.</p>
+                    <a href="@Url.Action("MyApplications", "Application", new { area = "" })" class="btn btn-primary">View Applications</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,255 @@
+@model GraduationAdmissionSystem.ViewModels.DocumentsViewModel
+@using GraduationAdmissionSystem.Models
+
+@{
+    ViewData["Title"] = "Upload Documents";
+    var uploadedDocumentTypes = (ViewBag.UploadedDocuments as List<Document> ?? new List<Document>())
+                                .Select(d => d.DocumentType)
+                                .ToList();
+    var requiredDocTypes = (ViewBag.RequiredDocTypes as List<string> ?? new List<string>());
+    var optionalDocTypes = (ViewBag.OptionalDocTypes as List<string> ?? new List<string>());
+    var allPossibleTypes = (ViewBag.AllPossibleDocumentTypes as List<string> ?? new List<string>());
+    var missingRequired = (ViewBag.MissingRequiredDocTypes as List<string> ?? new List<string>());
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="progress mb-4">
+                <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">70%</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4">@ViewData["Title"]</h2>
+            
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Success"]
+                </div>
+            }
+            
+            <div id="clientErrorAlert" class="alert alert-danger" style="display: none;">
+                <span id="clientErrorMessage"></span>
+            </div>
+
+            <div class="accordion mb-4" id="documentsAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#documentsUploadCollapse" aria-expanded="true">
+                            Documents Upload
+                        </button>
+                    </h2>
+                    <div id="documentsUploadCollapse" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <form action="/Application/UploadDocument" method="post" enctype="multipart/form-data" id="uploadForm">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="ProgramSelectionId" value="@Model.ProgramSelectionId" />
+                                <div class="mb-3">
+                                    <label for="documentType" class="form-label">Document Type</label>
+                                    <select id="documentType" name="DocumentType" class="form-select">
+                                        <option value="">-- Select Document Type --</option>
+                                        @foreach (var docType in allPossibleTypes)
+                                        {
+                                            var displayText = docType;
+                                            var isDisabled = uploadedDocumentTypes.Contains(docType);
+                                            if (requiredDocTypes.Contains(docType))
+                                            {
+                                                displayText += " (*)";
+                                            }
+                                            else if (optionalDocTypes.Contains(docType))
+                                            {
+                                                displayText += " (Optional)";
+                                            }
+                                            <option value="@docType" disabled="@isDisabled">@displayText @(isDisabled ? "- Already Uploaded" : "")</option>
+                                        }
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Attachment</label>
+                                    <div class="input-group">
+                                        <input type="file" id="documentFile" name="documentFile" class="form-control" />
+                                        <button type="submit" class="btn btn-primary">Upload File</button>
+                                    </div>
+                                    <small class="text-muted">Accepted formats: PDF, JPG, PNG (max 10MB)</small>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#uploadedDocsCollapse" aria-expanded="true">
+                            Uploaded Documents
+                        </button>
+                    </h2>
+                    <div id="uploadedDocsCollapse" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            @if (ViewBag.UploadedDocuments != null && ((List<Document>)ViewBag.UploadedDocuments).Any())
+                            {
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Action</th>
+                                            <th>Title</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="uploadedDocsList">
+                                        @foreach (var doc in (List<Document>)ViewBag.UploadedDocuments)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <form action="/Application/DeleteDocument" method="post" style="display: inline;">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="id" value="@doc.Id" />
+                                                        <input type="hidden" name="programSelectionId" value="@Model.ProgramSelectionId" />
+                                                        <button type="submit" class="btn btn-link text-danger p-0">Remove</button>
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    @doc.DocumentType
+                                                    @if (requiredDocTypes.Contains(doc.DocumentType))
+                                                    {
+                                                        <span class="badge bg-danger ms-2">Required</span>
+                                                    }
+                                                    else if (optionalDocTypes.Contains(doc.DocumentType))
+                                                    {
+                                                        <span class="badge bg-secondary ms-2">Optional</span>
+                                                    }
+                                                </td>
+                                                <td><span class="text-success">Uploaded</span></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <p>No documents uploaded yet.</p>
+                            }
+                            
+                            @if (missingRequired != null && missingRequired.Any())
+                            {
+                                <div class="alert alert-warning mt-3">
+                                    <p><strong>Required documents missing:</strong></p>
+                                    <ul>
+                                        @foreach (var docName in missingRequired)
+                                        {
+                                            <li>@docName (*)</li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="d-flex justify-content-between mt-4">
+                <a href="/Application/EducationalInformation?id=@Model.ProgramSelectionId" class="btn btn-secondary">Previous</a>
+                <form action="/Application/DocumentsComplete" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="ProgramSelectionId" value="@Model.ProgramSelectionId" />
+                    <button type="submit" class="btn btn-primary">Next</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            console.log("Document ready, initializing form handlers");
+            
+            $('#uploadForm').on('submit', function (e) {
+                e.preventDefault(); 
+                
+                const docType = $('#documentType').val();
+                const fileInput = $('#documentFile')[0];
+                const errorDiv = $('#clientErrorAlert');
+                const errorMsg = $('#clientErrorMessage');
+                
+                console.log("Form submit triggered");
+                console.log("Document Type: " + docType);
+                console.log("File selected: " + (fileInput.files.length > 0 ? fileInput.files[0].name : "none"));
+                
+                errorDiv.hide();
+                
+                if (!docType) {
+                    console.log("Error: No document type selected");
+                    errorMsg.text("Please select a document type");
+                    errorDiv.show();
+                    return false;
+                }
+                
+                if (fileInput.files.length === 0) {
+                    console.log("Error: No file selected");
+                    errorMsg.text("Please select a file to upload");
+                    errorDiv.show();
+                    return false;
+                }
+                
+                if (fileInput.files[0].size > 10 * 1024 * 1024) {
+                    console.log("Error: File size exceeds limit - " + fileInput.files[0].size + " bytes");
+                    errorMsg.text("File size exceeds the 10MB limit");
+                    errorDiv.show();
+                    return false;
+                }
+                
+                const formData = new FormData(this);
+                
+                console.log("Form data prepared, sending AJAX request");
+                console.log("FormData entries:");
+                for (let pair of formData.entries()) {
+                    console.log(pair[0] + ': ' + (pair[0] === 'documentFile' ? pair[1].name : pair[1]));
+                }
+                
+                $.ajax({
+                    url: '/Application/UploadDocument',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        console.log("Upload successful, reloading page");
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Upload failed with status: " + xhr.status);
+                        console.log("Response text: " + xhr.responseText);
+                        
+                        let errorMessage = "An error occurred while uploading the document. ";
+                        
+                        try {
+                            const responseJson = JSON.parse(xhr.responseText);
+                            if (responseJson && responseJson.error) {
+                                errorMessage += responseJson.error;
+                            } else {
+                                errorMessage += "Status: " + xhr.status;
+                            }
+                        } catch (e) {
+                            errorMessage += "Status: " + xhr.status;
+                        }
+                        
+                        errorMsg.text(errorMessage);
+                        errorDiv.show();
+                    }
+                });
+            });
+        });
+    </script>
+} 

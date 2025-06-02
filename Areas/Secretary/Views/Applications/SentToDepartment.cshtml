@@ -1,0 +1,62 @@
+@model IEnumerable<GraduationAdmissionSystem.Models.ProgramSelection>
+@{
+    ViewData["Title"] = "Applications Sent to Department";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (Model.Any())
+{
+    <table class="table table-striped table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>Applicant</th>
+                <th>Email</th>
+                <th>Program Choices</th>
+                <th>Forwarded At</th>
+                <th>Assigned To</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(item.User?.FirstName) @(item.User?.LastName)</td>
+                    <td>@(item.User?.Email)</td>
+                    <td>
+                        @if (item.ProgramChoices != null && item.ProgramChoices.Any())
+                        {
+                            <ul class="list-unstyled mb-0">
+                                @foreach (var choice in item.ProgramChoices.OrderBy(c => c.Choice))
+                                {
+                                    <li>@choice.Choice. @choice.ProgramName</li>
+                                }
+                            </ul>
+                        }
+                    </td>
+                    <td>@(item.ForwardedToDepartmentAt?.ToString("yyyy-MM-dd HH:mm") ?? "N/A")</td>
+                    <td>@(item.AssignedDepartmentChair?.FirstName) @(item.AssignedDepartmentChair?.LastName)</td>
+                    <td><span class="badge bg-warning text-dark">@item.ApplicationStatus</span></td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">View Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No applications are currently under department review.</p>
+} 

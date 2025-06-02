@@ -1,0 +1,47 @@
+@model GraduationAdmissionSystem.Models.ProgramQuota
+
+@{ 
+    ViewData["Title"] = "Delete Program Quota";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h3>Are you sure you want to delete this program quota?</h3>
+<div>
+    <h4>@Model.Program.Name - @Model.ApplicationPeriod.Name</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Application Period</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.ApplicationPeriod.Name)</dd>
+
+        <dt class="col-sm-3">Program Name</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Program.Name) (@Html.DisplayFor(model => model.Program.Level))</dd>
+
+        <dt class="col-sm-3">Total Quota</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.TotalQuota)</dd>
+
+        @if (Model.ScholarshipQuotas != null && Model.ScholarshipQuotas.Any())
+        {
+            <dt class="col-sm-3">Scholarship Distribution</dt>
+            <dd class="col-sm-9">
+                <ul>
+                    @foreach (var sq in Model.ScholarshipQuotas.OrderBy(s => s.ScholarshipPercentage))
+                    {
+                        <li>@sq.ScholarshipPercentage% Scholarship: @sq.AllocatedQuota students</li>
+                    }
+                </ul>
+            </dd>
+        }
+        else
+        {
+            <dt class="col-sm-3">Scholarship Distribution</dt>
+            <dd class="col-sm-9">No scholarship distribution defined.</dd>
+        }
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ProgramQuotaId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div> 

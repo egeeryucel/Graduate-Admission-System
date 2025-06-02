@@ -1,0 +1,94 @@
+@model GraduationAdmissionSystem.ViewModels.BulkApplicationViewModel
+@{
+    ViewData["Title"] = "Create Bulk Application";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <h4>Student Application List</h4>
+        <form asp-action="AddStudent" method="post">
+            <button type="submit" class="btn btn-success mb-3"><i class="fas fa-plus-circle"></i> Add New Student Application</button>
+        </form>
+
+        @if (Model.StudentApplications != null && Model.StudentApplications.Any())
+        {
+            <ul class="list-group mb-3">
+                @foreach (var studentApp in Model.StudentApplications)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        @(studentApp.StudentName) (Step: @(studentApp.CurrentStep))
+                        <span>
+                            <a asp-action="EditStudentApplication" asp-route-tempId="@(studentApp.TemporaryId)" class="btn btn-sm btn-primary me-1">Edit/Continue</a>
+                        </span>
+                    </li>
+                }
+            </ul>
+
+            <form asp-action="SubmitAllApplications" method="post" onsubmit="return confirm('Are you sure you want to submit all listed applications?');">
+                <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane"></i> Submit All Applications</button>
+            </form>
+        }
+        else
+        {
+            <p>No student applications have been added yet. Click "Add New Student Application" to begin.</p>
+        }
+    </div>
+
+    <div class="col-md-8">
+        @if (Model.CurrentEditingStudentTemporaryId.HasValue)
+        {
+            var currentStudent = Model.StudentApplications.FirstOrDefault(s => s.TemporaryId == Model.CurrentEditingStudentTemporaryId.Value);
+            if (currentStudent != null)
+            {
+                <h4>Editing: @(currentStudent.StudentName)</h4>
+                <div id="studentApplicationFormContainer">
+                    <p>Step @(currentStudent.CurrentStep) form will be loaded here.</p>
+                    @switch (currentStudent.CurrentStep)
+                    {
+                        case 1: 
+                            await Html.RenderPartialAsync("_BulkProgramSelection", currentStudent);
+                            break;
+                        case 2: 
+                            await Html.RenderPartialAsync("_BulkPersonalInformation", currentStudent);
+                            break;
+                        case 3: 
+                            await Html.RenderPartialAsync("_BulkEducationalInformation", currentStudent);
+                            break;
+                        case 4: 
+                            await Html.RenderPartialAsync("_BulkDocuments", currentStudent);
+                            break;
+                        case 5: 
+                            await Html.RenderPartialAsync("_BulkReviewAndSubmit", currentStudent);
+                            break;
+                        default:
+                            <p>Application step completed or unknown.</p>
+                            break;
+                    }
+                </div>
+            }
+            else
+            {
+                 <p class="alert alert-warning">Could not find the student application selected for editing.</p>
+            }
+        }
+        else if (Model.StudentApplications != null && Model.StudentApplications.Any())
+        {
+            <p class="alert alert-info">Select a student from the list to edit their application or add a new student.</p>
+        }
+    </div>
+</div>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+        <script type="text/javascript">
+            function goBackToStep(step, tempId) {
+                var url = '@Url.Action("EditStudentApplication", "BulkApplication", new { area = "Agency" })';
+                window.location.href = url + '?tempId=' + encodeURIComponent(tempId) + '&targetStep=' + encodeURIComponent(step);
+            }
+        </script>
+    }
