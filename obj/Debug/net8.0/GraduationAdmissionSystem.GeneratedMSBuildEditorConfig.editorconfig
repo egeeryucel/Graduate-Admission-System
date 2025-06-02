@@ -17,263 +17,263 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = GraduationAdmissionSystem
 build_property.RootNamespace = GraduationAdmissionSystem
-build_property.ProjectDir = C:\Users\cihan\OneDrive\Masaüstü\01.06.2025-21.25\
+build_property.ProjectDir = C:\Users\cihan\OneDrive\Masaüstü\20COMP1003_22SOFT1056\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\cihan\OneDrive\Masaüstü\01.06.2025-21.25
+build_property.MSBuildProjectDirectory = C:\Users\cihan\OneDrive\Masaüstü\20COMP1003_22SOFT1056
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Admin/Views/Home/CreateUser.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Admin/Views/Home/CreateUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxDcmVhdGVVc2VyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Admin/Views/Home/EditUser.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Admin/Views/Home/EditUser.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxFZGl0VXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Admin/Views/Home/Index.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Admin/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Admin/Views/Home/ManageUsers.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Admin/Views/Home/ManageUsers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxNYW5hZ2VVc2Vycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Admin/Views/_ViewImports.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Admin/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Admin/Views/_ViewStart.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Admin/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Agency/Views/BulkApplication/Index.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Agency/Views/BulkApplication/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWdlbmN5XFZpZXdzXEJ1bGtBcHBsaWNhdGlvblxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Agency/Views/BulkApplication/_BulkDocuments.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Agency/Views/BulkApplication/_BulkDocuments.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWdlbmN5XFZpZXdzXEJ1bGtBcHBsaWNhdGlvblxfQnVsa0RvY3VtZW50cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Agency/Views/BulkApplication/_BulkEducationalInformation.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Agency/Views/BulkApplication/_BulkEducationalInformation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWdlbmN5XFZpZXdzXEJ1bGtBcHBsaWNhdGlvblxfQnVsa0VkdWNhdGlvbmFsSW5mb3JtYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Agency/Views/BulkApplication/_BulkPersonalInformation.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Agency/Views/BulkApplication/_BulkPersonalInformation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWdlbmN5XFZpZXdzXEJ1bGtBcHBsaWNhdGlvblxfQnVsa1BlcnNvbmFsSW5mb3JtYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Agency/Views/BulkApplication/_BulkProgramSelection.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Agency/Views/BulkApplication/_BulkProgramSelection.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWdlbmN5XFZpZXdzXEJ1bGtBcHBsaWNhdGlvblxfQnVsa1Byb2dyYW1TZWxlY3Rpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Agency/Views/BulkApplication/_BulkReviewAndSubmit.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Agency/Views/BulkApplication/_BulkReviewAndSubmit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWdlbmN5XFZpZXdzXEJ1bGtBcHBsaWNhdGlvblxfQnVsa1Jldmlld0FuZFN1Ym1pdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Agency/Views/Home/Details.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Agency/Views/Home/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWdlbmN5XFZpZXdzXEhvbWVcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Agency/Views/Home/Index.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Agency/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWdlbmN5XFZpZXdzXEhvbWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Agency/Views/_ViewImports.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Agency/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWdlbmN5XFZpZXdzXF9WaWV3SW1wb3J0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Agency/Views/_ViewStart.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Agency/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWdlbmN5XFZpZXdzXF9WaWV3U3RhcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Candidate/Views/Home/Index.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Candidate/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2FuZGlkYXRlXFZpZXdzXEhvbWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Candidate/Views/_ViewImports.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Candidate/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2FuZGlkYXRlXFZpZXdzXF9WaWV3SW1wb3J0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Candidate/Views/_ViewStart.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Candidate/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2FuZGlkYXRlXFZpZXdzXF9WaWV3U3RhcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/DepartmentChair/Views/Home/Applications.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/DepartmentChair/Views/Home/Applications.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVwYXJ0bWVudENoYWlyXFZpZXdzXEhvbWVcQXBwbGljYXRpb25zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/DepartmentChair/Views/Home/DecisionHistory.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/DepartmentChair/Views/Home/DecisionHistory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVwYXJ0bWVudENoYWlyXFZpZXdzXEhvbWVcRGVjaXNpb25IaXN0b3J5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/DepartmentChair/Views/Home/Details.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/DepartmentChair/Views/Home/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVwYXJ0bWVudENoYWlyXFZpZXdzXEhvbWVcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/DepartmentChair/Views/Home/Index.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/DepartmentChair/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVwYXJ0bWVudENoYWlyXFZpZXdzXEhvbWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/DepartmentChair/Views/Home/ManageInterviews.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/DepartmentChair/Views/Home/ManageInterviews.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVwYXJ0bWVudENoYWlyXFZpZXdzXEhvbWVcTWFuYWdlSW50ZXJ2aWV3cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/DepartmentChair/Views/_ViewImports.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/DepartmentChair/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVwYXJ0bWVudENoYWlyXFZpZXdzXF9WaWV3SW1wb3J0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/DepartmentChair/Views/_ViewStart.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/DepartmentChair/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRGVwYXJ0bWVudENoYWlyXFZpZXdzXF9WaWV3U3RhcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/ApplicationPeriods/Create.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/ApplicationPeriods/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXEFwcGxpY2F0aW9uUGVyaW9kc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/ApplicationPeriods/Delete.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/ApplicationPeriods/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXEFwcGxpY2F0aW9uUGVyaW9kc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/ApplicationPeriods/Edit.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/ApplicationPeriods/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXEFwcGxpY2F0aW9uUGVyaW9kc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/ApplicationPeriods/Index.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/ApplicationPeriods/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXEFwcGxpY2F0aW9uUGVyaW9kc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/ApplicationPeriods/_ViewStart.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/ApplicationPeriods/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXEFwcGxpY2F0aW9uUGVyaW9kc1xfVmlld1N0YXJ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/Applications/Details.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/Applications/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXEFwcGxpY2F0aW9uc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/Applications/Pending.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/Applications/Pending.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXEFwcGxpY2F0aW9uc1xQZW5kaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/Applications/SentToDepartment.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/Applications/SentToDepartment.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXEFwcGxpY2F0aW9uc1xTZW50VG9EZXBhcnRtZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/Home/Index.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXEhvbWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/Quota/Create.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/Quota/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXFF1b3RhXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/Quota/Delete.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/Quota/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXFF1b3RhXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/Quota/Edit.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/Quota/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXFF1b3RhXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/Quota/Index.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/Quota/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXFF1b3RhXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/Quota/_ScholarshipQuotaEditor.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/Quota/_ScholarshipQuotaEditor.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXFF1b3RhXF9TY2hvbGFyc2hpcFF1b3RhRWRpdG9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/_ViewImports.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXF9WaWV3SW1wb3J0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Areas/Secretary/Views/_ViewStart.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Areas/Secretary/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU2VjcmV0YXJ5XFZpZXdzXF9WaWV3U3RhcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/iews/Application/ProgramSelection.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/iews/Application/ProgramSelection.cshtml]
 build_metadata.AdditionalFiles.TargetPath = aWV3c1xBcHBsaWNhdGlvblxQcm9ncmFtU2VsZWN0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Account/AccessDenied.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Account/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Account/Login.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Account/Register.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Application/ApplicationCompleted.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Application/ApplicationCompleted.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYXRpb25cQXBwbGljYXRpb25Db21wbGV0ZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Application/ApplicationSubmitted.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Application/ApplicationSubmitted.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYXRpb25cQXBwbGljYXRpb25TdWJtaXR0ZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Application/Documents.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Application/Documents.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYXRpb25cRG9jdW1lbnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Application/EducationalInformation.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Application/EducationalInformation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYXRpb25cRWR1Y2F0aW9uYWxJbmZvcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Application/MyApplications.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Application/MyApplications.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYXRpb25cTXlBcHBsaWNhdGlvbnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Application/PersonalInformation.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Application/PersonalInformation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYXRpb25cUGVyc29uYWxJbmZvcm1hdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Application/ProgramSelection.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Application/ProgramSelection.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYXRpb25cUHJvZ3JhbVNlbGVjdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Application/SelectPersonalInfoOption.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Application/SelectPersonalInfoOption.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXBwbGljYXRpb25cU2VsZWN0UGVyc29uYWxJbmZvT3B0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Home/ApplicationStatus.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Home/ApplicationStatus.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBcHBsaWNhdGlvblN0YXR1cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Home/CheckStatus.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Home/CheckStatus.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDaGVja1N0YXR1cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Home/Index.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Home/Privacy.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Shared/Error.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/_ViewImports.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/_ViewStart.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/cihan/OneDrive/Masaüstü/01.06.2025-21.25/Views/Shared/_Layout.cshtml]
+[C:/Users/cihan/OneDrive/Masaüstü/20COMP1003_22SOFT1056/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-3levak2s6i

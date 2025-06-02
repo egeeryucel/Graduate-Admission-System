@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "L46Is2rid/o=",
+  "dgSpecHash": "ukc2MQUBJKA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\cihan\\OneDrive\\Masaüstü\\01.06.2025-21.25\\GraduationAdmissionSystem.csproj",
+  "projectFilePath": "C:\\Users\\cihan\\OneDrive\\Masaüstü\\20COMP1003_22SOFT1056\\GraduationAdmissionSystem.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\cihan\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\cihan\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

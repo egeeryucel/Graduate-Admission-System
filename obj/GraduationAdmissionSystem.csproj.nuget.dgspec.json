@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cihan\\OneDrive\\Masaüstü\\01.06.2025-21.25\\GraduationAdmissionSystem.csproj": {}
+    "C:\\Users\\cihan\\OneDrive\\Masaüstü\\20COMP1003_22SOFT1056\\GraduationAdmissionSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cihan\\OneDrive\\Masaüstü\\01.06.2025-21.25\\GraduationAdmissionSystem.csproj": {
+    "C:\\Users\\cihan\\OneDrive\\Masaüstü\\20COMP1003_22SOFT1056\\GraduationAdmissionSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cihan\\OneDrive\\Masaüstü\\01.06.2025-21.25\\GraduationAdmissionSystem.csproj",
+        "projectUniqueName": "C:\\Users\\cihan\\OneDrive\\Masaüstü\\20COMP1003_22SOFT1056\\GraduationAdmissionSystem.csproj",
         "projectName": "GraduationAdmissionSystem",
-        "projectPath": "C:\\Users\\cihan\\OneDrive\\Masaüstü\\01.06.2025-21.25\\GraduationAdmissionSystem.csproj",
+        "projectPath": "C:\\Users\\cihan\\OneDrive\\Masaüstü\\20COMP1003_22SOFT1056\\GraduationAdmissionSystem.csproj",
         "packagesPath": "C:\\Users\\cihan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cihan\\OneDrive\\Masaüstü\\01.06.2025-21.25\\obj\\",
+        "outputPath": "C:\\Users\\cihan\\OneDrive\\Masaüstü\\20COMP1003_22SOFT1056\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
